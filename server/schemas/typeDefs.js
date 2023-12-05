@@ -10,13 +10,13 @@ const typeDefs = `
     username: String
     email: String
     password: String
-    savedBooks: [Book]
+    savedVideos: [Video]
   }
 
-  type Book {
-    authors: [String]
+  type Video {
+    channel: [String]
     description: String!
-    bookId: String!
+    videoId: String!
     image: String
     link: String
     title: String!
@@ -30,12 +30,13 @@ const typeDefs = `
   type Query {
     me: User
     channelData(query: String!): ChannelData
+    videoSearch(query: String!): [Video]
   }
 
-  input BookInput {
-    authors: [String]
+  input VideoInput {
+    channel: [String]
     description: String!
-    bookId: String!
+    videoId: String!
     image: String
     link: String
     title: String!
@@ -44,8 +45,8 @@ const typeDefs = `
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    saveBook(book: BookInput): User
-    removeBook(bookId: String!): User
+    saveVideo(video: VideoInput): User
+    removeVideo(videoId: String!): User
   }
 `;
 

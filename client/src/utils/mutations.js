@@ -13,20 +13,20 @@ mutation Login($email: String!, $password: String!) {
     }
   }
 `
-export const SAVE_BOOK = gql`
-mutation SaveBook($book: BookInput) {
-    saveBook(book: $book) {
-      savedBooks {
+export const SAVE_VIDEO = gql`
+mutation SaveVideo($video: VideoInput) {
+    saveVideo(video: $video) {
+      savedVideos {
         title
       }
     }
   }
 `
-export const REMOVE_BOOK = gql`
-mutation RemoveBook($bookId: String!) {
-    removeBook(bookId: $bookId) {
+export const REMOVE_VIDEO = gql`
+mutation RemoveVideo($videoId: String!) {
+    removeVideo(videoId: $videoId) {
       username
-      savedBooks {
+      savedVideos {
         title
       }
     }
