@@ -78,11 +78,11 @@ const resolvers = {
 
       return { token, user };
     },
-    saveBook: async (parent, { book }, context) => {
+    saveVideo: async (parent, { video }, context) => {
       if (context.user) {
         const user = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { savedBooks: { ...book } } },
+          { $addToSet: { savedVideos: { ...video } } },
           { new: true }
         );
 
@@ -91,11 +91,11 @@ const resolvers = {
       throw AuthenticationError;
       ('You need to be logged in!');
     },
-    removeBook: async (parent, { bookId }, context) => {
+    removeVideo: async (parent, { videoId }, context) => {
       if (context.user) {
         const user = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedBooks: { bookId } } },
+          { $pull: { savedVideos: { videoId } } },
           { new: true }
         );
 

@@ -28,21 +28,21 @@ export const loginUser = (userData) => {
   });
 };
 
-// save book data for a logged in user
-export const saveBook = (bookData, token) => {
+// save video data for a logged in user
+export const saveVideo = (videoData, token) => {
   return fetch('/api/users', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(bookData),
+    body: JSON.stringify(videoData),
   });
 };
 
-// remove saved book data for a logged in user
-export const deleteBook = (bookId, token) => {
-  return fetch(`/api/users/books/${bookId}`, {
+// remove saved video data for a logged in user
+export const deleteVideo = (videoId, token) => {
+  return fetch(`/api/users/videos/${videoId}`, {
     method: 'DELETE',
     headers: {
       authorization: `Bearer ${token}`,
@@ -50,9 +50,9 @@ export const deleteBook = (bookId, token) => {
   });
 };
 
-// make a search to google books api
-// https://www.googleapis.com/books/v1/volumes?q=harry+potter
-export const searchGoogleBooks = (query) => {
+// make a search to youtube videos api
+// https://yt-api.p.rapidapi.com/search?query=' + args.query + '&type=video'
+export const searchYtVideos = (query) => {
   return fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
 };
 

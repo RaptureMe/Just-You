@@ -1,30 +1,30 @@
-export const getSavedBookIds = () => {
-  const savedBookIds = localStorage.getItem('saved_books')
-    ? JSON.parse(localStorage.getItem('saved_books'))
+export const getSavedVideoIds = () => {
+  const savedVideoIds = localStorage.getItem('saved_videos')
+    ? JSON.parse(localStorage.getItem('saved_videos'))
     : [];
 
-  return savedBookIds;
+  return savedVideoIds;
 };
 
-export const saveBookIds = (bookIdArr) => {
-  if (bookIdArr.length) {
-    localStorage.setItem('saved_books', JSON.stringify(bookIdArr));
+export const saveVideoIds = (videoIdArr) => {
+  if (videoIdArr.length) {
+    localStorage.setItem('saved_videos', JSON.stringify(videoIdArr));
   } else {
-    localStorage.removeItem('saved_books');
+    localStorage.removeItem('saved_videos');
   }
 };
 
-export const removeBookId = (bookId) => {
-  const savedBookIds = localStorage.getItem('saved_books')
-    ? JSON.parse(localStorage.getItem('saved_books'))
+export const removeVideoId = (videoId) => {
+  const savedVideoIds = localStorage.getItem('saved_videos')
+    ? JSON.parse(localStorage.getItem('saved_videos'))
     : null;
 
-  if (!savedBookIds) {
+  if (!savedVideoIds) {
     return false;
   }
 
-  const updatedSavedBookIds = savedBookIds?.filter((savedBookId) => savedBookId !== bookId);
-  localStorage.setItem('saved_books', JSON.stringify(updatedSavedBookIds));
+  const updatedSavedVideoIds = savedVideoIds?.filter((savedVideoId) => savedVideoId !== videoId);
+  localStorage.setItem('saved_videos', JSON.stringify(updatedSavedVideoIds));
 
   return true;
 };

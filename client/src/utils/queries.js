@@ -3,10 +3,10 @@ export const QUERY_ME = gql`
 query Me {
     me {
       username
-      savedBooks {
-        authors
+      savedVideos {
+        channel
         description
-        bookId
+        videoId
         image
         link
         title
