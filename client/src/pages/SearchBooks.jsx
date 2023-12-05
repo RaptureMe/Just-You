@@ -11,7 +11,7 @@ import {useMutation} from "@apollo/client";
 import {SAVE_BOOK} from '../utils/mutations';
 
 import Auth from '../utils/auth';
-import { searchGoogleBooks } from '../utils/API';
+import { searchGoogleBooks, searchYtChannel } from '../utils/API';
 import { getSavedBookIds } from '../utils/localStorage';
 
 const SearchBooks = () => {
@@ -27,6 +27,7 @@ const SearchBooks = () => {
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    const channelId = await searchYtChannel (searchInput);
 
     if (!searchInput) {
       return false;

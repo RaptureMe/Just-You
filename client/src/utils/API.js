@@ -55,3 +55,28 @@ export const deleteBook = (bookId, token) => {
 export const searchGoogleBooks = (query) => {
   return fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
 };
+
+export const searchYtChannel = async (query) => {
+  const url = 'https://youtube-v2.p.rapidapi.com/channel/id?channel_name=' + query;
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '960b967ce9msh6666b8331ce42fdp122b75jsn89f1498616db',
+      'X-RapidAPI-Host': 'youtube-v2.p.rapidapi.com'
+    }
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+    const searchRes = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${result.channel_id}&key=AIzaSyCLjVLclOGVy4uIMGD5EEAK1r0LFKGjGJw`);
+    const search = await searchRes.json()
+    console.log(search)
+    return search;
+  } catch (error) {
+    console.error(error);
+  }
+  // return fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${query}&key=${process.env.REACT_APP_KEY}`).then (response => response.json()).then (channelData => {
+  //   fetch (`https://yt.lemnoslife.com/channels?handle=@${channelData.}`)
+  // });
+};
