@@ -30,6 +30,7 @@ const typeDefs = `
   type Query {
     me: User
     channelData(query: String!): ChannelData
+    videoSearch(query: String!): [Video]
   }
 
   input VideoInput {

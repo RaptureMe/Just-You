@@ -8,10 +8,10 @@ import {
   Row
 } from 'react-bootstrap';
 import {useMutation} from "@apollo/client";
-import {SAVE_VIDEO, SAVE_Video} from '../utils/mutations';
+import {SAVE_VIDEO} from '../utils/mutations';
 
 import Auth from '../utils/auth';
-import { searchYtVideos, searchYtChannel } from '../utils/API';
+import { searchYtVideos} from '../utils/API';
 import { getSavedVideoIds } from '../utils/localStorage';
 
 const SearchVideos = () => {
@@ -27,7 +27,7 @@ const SearchVideos = () => {
   // create method to search for videos and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const channelId = await searchYtVideos (searchInput);
+    const videoId = await searchYtVideos (searchInput);
 
     if (!searchInput) {
       return false;
@@ -62,7 +62,7 @@ const SearchVideos = () => {
   // create function to handle saving a video to our database
   const handleSaveVideo = async (videoId) => {
     // find the video in `searchedVideos` state by the matching id
-    const bookToSave = searchedVideos.find((video) => video.videoId === videoId);
+    const videoToSave = searchedVideos.find((video) => video.videoId === videoId);
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -123,7 +123,7 @@ const SearchVideos = () => {
                   ) : null}
                   <Card.Body>
                     <Card.Title>{video.title}</Card.Title>
-                    <p className='small'>Channels: {book.channels}</p>
+                    <p className='small'>Channels: {video.channels}</p>
                     <Card.Text>{video.description}</Card.Text>
                     {Auth.loggedIn() && (
                       <Button

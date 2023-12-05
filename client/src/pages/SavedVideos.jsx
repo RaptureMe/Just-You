@@ -7,7 +7,7 @@ import {
 } from 'react-bootstrap';
 
 import { useMutation, useQuery } from '@apollo/client';
-import {REMOVE_Video} from "../utils/mutations";
+import {REMOVE_VIDEO} from "../utils/mutations";
 import {QUERY_ME} from "../utils/queries";
 import Auth from '../utils/auth';
 import { removeVideoId } from '../utils/localStorage';
