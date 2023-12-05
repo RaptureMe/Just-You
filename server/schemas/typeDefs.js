@@ -1,4 +1,10 @@
 const typeDefs = `
+  type ChannelData {
+    viewCount: Int,
+		subscriberCount: Int,
+		videoCount: Int
+  }
+
   type User {
     _id: ID
     username: String
@@ -23,6 +29,7 @@ const typeDefs = `
 
   type Query {
     me: User
+    channelData(query: String!): ChannelData
   }
 
   input BookInput {

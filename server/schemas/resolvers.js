@@ -8,7 +8,32 @@ const resolvers = {
         return User.findOne({ _id: context.user._id });
       }
       throw AuthenticationError;
-    }
+    },
+    channelData: async (parent, args, context) => {
+      const url = 'https://youtube-v2.p.rapidapi.com/channel/id?channel_name=' + args.query;
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key': '960b967ce9msh6666b8331ce42fdp122b75jsn89f1498616db',
+          'X-RapidAPI-Host': 'youtube-v2.p.rapidapi.com'
+        }
+      };
+
+      try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        const searchRes = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${result.channel_id}&key=AIzaSyCLjVLclOGVy4uIMGD5EEAK1r0LFKGjGJw`);
+        const search = await searchRes.json()
+        console.log(search)
+        return {
+          viewCount: search.items[0].statistics.viewCount,
+          subscriberCount: search.items[0].statistics.subscriberCount,
+          videoCount: search.items[0].statistics.videoCount
+        };
+      } catch (error) {
+        console.error(error);
+      };
+    },
   },
 
   Mutation: {
