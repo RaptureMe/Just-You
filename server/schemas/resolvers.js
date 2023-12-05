@@ -16,7 +16,7 @@ const resolvers = {
         headers: {
           'X-RapidAPI-Key': '960b967ce9msh6666b8331ce42fdp122b75jsn89f1498616db',
           'X-RapidAPI-Host': 'youtube-v2.p.rapidapi.com'
-        }
+        },
       };
 
       try {
@@ -34,6 +34,25 @@ const resolvers = {
         console.error(error);
       };
     },
+
+    videoSearch: async (parent, args, context) => {
+      const url = 'https://yt-api.p.rapidapi.com/search?query=inputhere&type=video';
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key': '960b967ce9msh6666b8331ce42fdp122b75jsn89f1498616db',
+          'X-RapidAPI-Host': 'yt-api.p.rapidapi.com'
+        }
+      };
+
+      try {
+        const response = await fetch(url, options);
+        const result = await response.text();
+        console.log(result);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   },
 
   Mutation: {
