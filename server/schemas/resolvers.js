@@ -36,7 +36,7 @@ const resolvers = {
     },
 
     videoSearch: async (parent, args, context) => {
-      const url = 'https://yt-api.p.rapidapi.com/search?query=inputhere&type=video';
+      const url = 'https://yt-api.p.rapidapi.com/search?query=' + args.query + '&type=video';
       const options = {
         method: 'GET',
         headers: {
