@@ -9,8 +9,8 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    channelData: async (parent, args, context) => {
-      const url = 'https://youtube-v2.p.rapidapi.com/channel/id?channel_name=' + args.query;
+    getChannelData: async (parent, { channelName }, context) => {
+      const url = 'https://youtube-v2.p.rapidapi.com/channel/id?channel_name=' + channelName;
       const options = {
         method: 'GET',
         headers: {
@@ -35,8 +35,8 @@ const resolvers = {
       };
     },
 
-    videoSearch: async (parent, args, context) => {
-      const url = 'https://yt-api.p.rapidapi.com/search?query=' + args.query + '&type=video';
+    searchVideo: async (parent, { queriedTitle }, context) => {
+      const url = 'https://yt-api.p.rapidapi.com/search?query=' + queriedTitle + '&type=video';
       const options = {
         method: 'GET',
         headers: {
@@ -47,10 +47,53 @@ const resolvers = {
 
       try {
         const response = await fetch(url, options);
-        const result = await response.text();
-        console.log(result);
+        const searchResults = await response.json();
+        const mappedSearchResults = searchResults.data
+          .map((video) => {
+            if (video.title == "Shorts") {
+              return;
+            }
+            let videoThumbnail;
+            if (video.thumbnail && video.thumbnail.length > 0) {
+              videoThumbnail = video.thumbnail[0].url;
+            }
+            return {
+              videoTitle: video.title,
+              videoID: video.videoId,
+              thumbnailURL: videoThumbnail,
+            }
+          })
+          .filter((video) => video !== undefined);
+        return mappedSearchResults;
       } catch (error) {
         console.error(error);
+      }
+    },
+    renderVideo: async (parent, { videoID }, context) => {
+      {
+        //fetching the video details according to videoID
+        const url = 'https://yt-api.p.rapidapi.com/video/info?id=' + videoID;
+        const options = {
+          method: 'GET',
+          headers: {
+            'X-RapidAPI-Key': '8fba63d966msh00c2856b3750933p19960ejsn74beb5027bf8', //Jushen's API Key
+            'X-RapidAPI-Host': 'yt-api.p.rapidapi.com'
+          }
+        };
+        try {
+          const response = await fetch(url, options);
+          const data = await response.json();
+          return {
+            link: "https://www.youtube.com/watch?v=" + data.id,
+            videoTitle: data.title,
+            description: data.description,
+            channelTitle: data.channelTitle,
+            thumbnailURL: data.thumbnail[0].url
+          }
+        } 
+        catch (error) {
+          console.error(error);
+        }
       }
     }
   },
