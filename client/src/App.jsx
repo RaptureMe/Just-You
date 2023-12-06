@@ -1,4 +1,5 @@
 import './App.css';
+import 'material-icons/iconfont/material-icons.css';
 import { Outlet } from 'react-router-dom';
 import {
   ApolloClient,
@@ -7,6 +8,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+
 
 const httpLink = createHttpLink({
   uri: '/graphql',

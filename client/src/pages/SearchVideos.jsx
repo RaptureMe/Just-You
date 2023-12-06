@@ -13,6 +13,7 @@ import {SAVE_VIDEO} from '../utils/mutations';
 import Auth from '../utils/auth';
 import { searchYtVideos} from '../utils/API';
 import { getSavedVideoIds } from '../utils/localStorage';
+import heroBackground from '../assets/hero-bg.png';
 
 const SearchVideos = () => {
   const [SaveVideo] = useMutation (SAVE_VIDEO)
@@ -82,7 +83,7 @@ const SearchVideos = () => {
 
   return (
     <>
-      <div className="text-light bg-dark p-5">
+      {/* <div className="text-light bg-dark p-5">
         <Container>
           <h1>Search for Videos!</h1>
           <Form onSubmit={handleFormSubmit}>
@@ -142,8 +143,65 @@ const SearchVideos = () => {
           })}
         </Row>
       </Container>
+    </> */}
+
+        {/* Hero Section */}
+        <div
+        className="text-light bg-dark p-5"
+        style={{
+          backgroundImage: `url(${heroBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          height: '70vh',
+        }}
+      >
+        <Container>
+          <h1>Search for Videos!</h1>
+          <Form onSubmit={handleFormSubmit}>
+            <Row className='search-row'>
+              <Col xs={12} md={8}>
+                <Form.Control
+                  name="searchInput"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  type="text"
+                  size="sm"
+                  placeholder="Search for a video"
+                />
+              </Col>
+              <Col xs={12} md={4}>
+                <Button type="submit" variant="primary" size="sm">
+                  Submit Search
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </Container>
+      </div>
+
+      {/* Content Section */}
+      <Container>
+        <h2 className="pt-5">
+          {searchedVideos.length
+            ? `Viewing ${searchedVideos.length} results:`
+            : 'Search for a video to begin'}
+        </h2>
+        <Row>
+          {searchedVideos.map((video) => (
+            <Col md="4" key={video.videoId}>
+              <Card border="dark">
+                {/* our content  */}
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
     </>
   );
 };
 
 export default SearchVideos;
+
+
+
+
