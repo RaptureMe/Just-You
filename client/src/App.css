@@ -18,23 +18,11 @@ h6 {
 
 
 /* - - - header-top-bar - - - */
-.header-top-bar {
-  background: #212121 none repeat scroll 0 0;
-}
-/*top-link*/
-/* .top-link > ul.link > li {
-  background: #952c2c none repeat scroll 0 0;
-  content: "";
-  height: 15px;
-  left: 0;
-  position: absolute;
-  top: 13px;
-  width: 1px;
-} */
-.top-row {
+
+/* .top-row {
   display: flex;
-align-items: center;
-}
+  align-items: center;
+} */
 .row{
   display: flex;
   align-items: center;
@@ -45,8 +33,8 @@ align-items: center;
   display: flex;
   justify-content: flex-end;
   padding:0%;
-  margin-left: 700px;
-  margin-top: 400px;
+  margin-left: 50px;
+  margin-top: 200px;
 }
 
 .navbar {
@@ -56,7 +44,7 @@ align-items: center;
   padding-left: 60px;
   position: relative;
   z-index: 999;
-  background-color: white !important;
+  background-color: rgb(245, 244, 244) !important;
 }
 .link{
   display: flex;
@@ -64,9 +52,9 @@ align-items: center;
   justify-content: space-between;
   margin: 1rem;
 }
-.link > li a{
+.nav-link {
   margin: 0 1rem;
-  color:antiquewhite
+  color:rgb(17, 17, 17)
 }
 .logo {
   padding: 0 0;
@@ -80,10 +68,14 @@ align-items: center;
   border: 0 none;
   color: black;
 }
+button {
+  background-color: aqua;
+}
 
 
 
-
-
+@media screen {
+  
+}
 
 

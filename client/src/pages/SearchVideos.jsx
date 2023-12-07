@@ -14,6 +14,7 @@ import Auth from '../utils/auth';
 import { searchYtVideos} from '../utils/API';
 import { getSavedVideoIds } from '../utils/localStorage';
 import heroBackground from '../assets/hero-bg.png';
+// import videoBackground from '../assets/background-video.mp4';
 
 const SearchVideos = () => {
   const [SaveVideo] = useMutation (SAVE_VIDEO)
@@ -150,26 +151,27 @@ const SearchVideos = () => {
         className="text-light bg-dark p-5"
         style={{
           backgroundImage: `url(${heroBackground})`,
+          // backgroundVideo: `url(${videoBackground})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           height: '70vh',
         }}
       >
         <Container>
-          <h1>Search for Videos!</h1>
+          
           <Form onSubmit={handleFormSubmit}>
             <Row className='search-row'>
-              <Col xs={12} md={8}>
+              <Col xs={12} md={6}>
                 <Form.Control
                   name="searchInput"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
                   type="text"
                   size="sm"
-                  placeholder="Search for a video"
+                  placeholder="Search for any videos you like"
                 />
               </Col>
-              <Col xs={12} md={4}>
+              <Col xs={8} md={4}>
                 <Button type="submit" variant="primary" size="sm">
                   Submit Search
                 </Button>
@@ -184,7 +186,7 @@ const SearchVideos = () => {
         <h2 className="pt-5">
           {searchedVideos.length
             ? `Viewing ${searchedVideos.length} results:`
-            : 'Search for a video to begin'}
+            : ''}
         </h2>
         <Row>
           {searchedVideos.map((video) => (
