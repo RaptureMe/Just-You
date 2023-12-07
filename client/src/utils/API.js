@@ -52,8 +52,24 @@ export const deleteVideo = (videoId, token) => {
 
 // make a search to youtube videos api
 // https://yt-api.p.rapidapi.com/search?query=' + args.query + '&type=video'
-export const searchYtVideos = (query) => {
-  return fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
+export const searchYtVideos = async (query) => {
+  const url = `https://yt-api.p.rapidapi.com/search?query=${query}&type=video`;
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '960b967ce9msh6666b8331ce42fdp122b75jsn89f1498616db',
+      'X-RapidAPI-Host': 'yt-api.p.rapidapi.com'
+    }
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+    // console.log(result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  };
 };
 
 export const searchYtChannel = async (query) => {

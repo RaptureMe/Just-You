@@ -26,6 +26,15 @@ const videoSchema = new Schema({
     type: String,
     required: true,
   },
+  thumbnailURL: {
+    type: String
+  },
+  channelTitle: {
+    type: String
+  },
+  viewCount: {
+    type: String
+  }
 });
 
 module.exports = videoSchema;

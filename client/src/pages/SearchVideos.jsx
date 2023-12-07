@@ -7,17 +7,17 @@ import {
   Card,
   Row
 } from 'react-bootstrap';
-import {useMutation} from "@apollo/client";
-import {SAVE_VIDEO} from '../utils/mutations';
+import { useMutation } from "@apollo/client";
+import { SAVE_VIDEO } from '../utils/mutations';
 import Auth from '../utils/auth';
-import { searchYtVideos} from '../utils/API';
+import { searchYtVideos } from '../utils/API';
 import { getSavedVideoIds } from '../utils/localStorage';
 import heroBackground from '../assets/hero-bg.png';
 // import videoId from ''
 // import videoBackground from '../assets/background-video.mp4';
 
 const SearchVideos = () => {
-  const [SaveVideo] = useMutation (SAVE_VIDEO)
+  const [SaveVideo] = useMutation(SAVE_VIDEO)
   // create state for holding returned youtube api data
   const [searchedVideos, setSearchedVideos] = useState([]);
   // create state for holding our search field data
@@ -29,7 +29,7 @@ const SearchVideos = () => {
   // create method to search for videos and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const videoId = await searchYtVideos (searchInput);
+    const videoId = await searchYtVideos(searchInput);
 
     if (!searchInput) {
       return false;
@@ -38,22 +38,25 @@ const SearchVideos = () => {
     try {
       const response = await searchYtVideos(searchInput);
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
-
-      const { items } = await response.json();
-
+      const { data } = response;
+      console.log(data)
       // THIS SECTION BELOW NEEDS TO BE UPDATED WITH THE YOUTUBE API DATA STRUCTURE, I'VE ADDED 
       // VIDEOINFO TO THE ITEMS ARRAY FOR NOW
-      const videoData = items.map((video) => ({
-        videoId: video.id,
-        authors: video.videoInfo.channels || ['No channel to display'],
-        title: video.videoInfo.title,
-        description: video.videoInfo.description,
-        image: video.videoInfo.imageLinks?.thumbnail || '',
-      }));
-
+      const videoData = data.filter(search => search.type === "video").map((search) => {
+        console.log(search, "search")
+        if (search.type === "video") {
+          return {
+            videoId: search.videoId,
+            title: search.title,
+            description: search.description,
+            thumbnailURL: search ? search.thumbnail[0].url : "",
+            viewCount: search.viewCount,
+            link: "https://www.youtube.com/embed/" + search.videoId,
+            channelTitle: search.channelTitle
+          }
+        }
+      });
+      console.log(videoData, "videoData")
       setSearchedVideos(videoData);
       setSearchInput('');
     } catch (err) {
@@ -74,7 +77,7 @@ const SearchVideos = () => {
     }
 
     try {
-    await SaveVideo({variables: {video: videoToSave}});
+      await SaveVideo({ variables: { video: videoToSave } });
       // if video successfully saves to user's account, save book id to state
       setSavedVideoIds([...savedVideoIds, videoToSave.videoId]);
     } catch (err) {
@@ -146,8 +149,8 @@ const SearchVideos = () => {
       </Container>
     </> */}
 
-        {/* Hero Section */}
-        <div
+      {/* Hero Section */}
+      <div
         className="text-light bg-dark p-5"
         style={{
           backgroundImage: `url(${heroBackground})`,
@@ -158,7 +161,7 @@ const SearchVideos = () => {
         }}
       >
         <Container>
-          
+
           <Form onSubmit={handleFormSubmit}>
             <Row className='search-row'>
               <Col xs={12} md={6}>
@@ -189,15 +192,18 @@ const SearchVideos = () => {
             : ''}
         </h2>
         <Row>
-          {searchedVideos.map((video) => (
-            <Col md="4" key={video.videoId}>
-              <Card border="dark">
-                {/* our content  */}
-              </Card>
-            </Col>
-          ))}
+          {searchedVideos.map((video, index) => {
+            return (
+              <Col key={index} md="4">
+                <Card border="dark">
+                  {/* our content  */}
+                  <h1>{video.title}</h1>
+                  <a href={video.link}><img src={video.thumbnailURL} alt="" /></a>
+                </Card>
+              </Col>)
+          })}
         </Row>
-      </Container>
+      </Container >
     </>
   );
 };

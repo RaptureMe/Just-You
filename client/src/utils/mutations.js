@@ -15,20 +15,26 @@ mutation Login($email: String!, $password: String!) {
 `
 export const SAVE_VIDEO = gql`
 mutation SaveVideo($video: VideoInput) {
-    saveVideo(video: $video) {
-      savedVideos {
-        title
-      }
+  saveVideo(video: $video) {
+    username
+    savedVideos {
+      channels
+      videoId
+      title
+      description
+      link
+      thumbnailURL
+      channelTitle
     }
   }
+}
 `
 export const REMOVE_VIDEO = gql`
 mutation RemoveVideo($videoId: String!) {
-    removeVideo(videoId: $videoId) {
-      username
-      savedVideos {
-        title
-      }
+  removeVideo(videoId: $videoId) {
+    savedVideos {
+      title
     }
   }
+}
   `

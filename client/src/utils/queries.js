@@ -16,7 +16,7 @@ export const QUERY_ME = gql`
     }
 `;
 
-export const CHANNELDATA =gql`
+export const CHANNELDATA = gql`
   query channelData($channelName: String!) {
     channelData(channelName: $channelName) {
       viewCount
@@ -26,14 +26,14 @@ export const CHANNELDATA =gql`
   }
 `;
 
-export const SEARCH_VIDEO = gql`
-  query searchVideo($queriedTitle: String!)
-    searchVideo(queriedTitle: $queriedTitle) {
-      videoID,
-      videoTitle,
-      thumbnailURL
-    }
-`;
+// export const SEARCH_VIDEO = gql`
+//   query searchVideo($queriedTitle: String!)
+//     searchVideo(queriedTitle: $queriedTitle) {
+//       videoID,
+//       videoTitle,
+//       thumbnailURL
+//     }
+// `;
 
 export const RENDER_VIDEO = gql`
     query renderVideo($videoID: String!) {
