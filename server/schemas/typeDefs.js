@@ -13,24 +13,18 @@ const typeDefs = `
     savedVideos: [Video]
   }
 
-  type Video {
-    channel: [String]
-    description: String!
-    videoId: String!
-    image: String
-    link: String
-    title: String!
-  }
-
   type Auth {
     token: ID!
     user: User
   }
 
-  type Query {
-    me: User
-    channelData(query: String!): ChannelData
-    videoSearch(query: String!): [Video]
+  type Video {
+    videoID: String
+    videoTitle: String
+    description: String
+    link: String
+    thumbnailURL: String
+    channelTitle: String
   }
 
   input VideoInput {
@@ -40,6 +34,13 @@ const typeDefs = `
     image: String
     link: String
     title: String!
+  }
+
+  type Query {
+    me: User
+    getChannelData(channelName: String!): ChannelData
+    searchVideo(queriedTitle: String!): [Video]
+    renderVideo(videoID: String!): Video
   }
 
   type Mutation {
