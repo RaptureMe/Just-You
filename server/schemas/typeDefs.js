@@ -19,8 +19,9 @@ const typeDefs = `
   }
 
   type Video {
-    videoID: String
-    videoTitle: String
+    channels: [String]
+    videoId: String
+    title: String
     description: String
     link: String
     thumbnailURL: String
@@ -28,12 +29,13 @@ const typeDefs = `
   }
 
   input VideoInput {
-    channel: [String]
-    description: String!
-    videoId: String!
-    image: String
+    channels: [String]
+    videoId: String
+    title: String
+    description: String
     link: String
-    title: String!
+    thumbnailURL: String
+    channelTitle: String
   }
 
   type Query {
