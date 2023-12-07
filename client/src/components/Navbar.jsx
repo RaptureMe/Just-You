@@ -25,7 +25,7 @@ const AppNavbar = () => {
               <Nav.Link as={Link} to='/' className='d-none d-lg-block'>
                 Search For Videos
               </Nav.Link>
-              {/* if user is logged in show saved videos and logout */}
+              {/* if user is logged in show saved videos*/}
               {Auth.loggedIn() ? (
                 <>
                   <a className = "nav-link d-none d-lg-block" href='/saved'>
