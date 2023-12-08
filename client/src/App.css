@@ -1,5 +1,5 @@
 body {
-  font-family: 'Rubik', sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 h1,
@@ -8,12 +8,13 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Rubik Mono One', sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .small {
   font-weight: 300;
   font-style: italic;
+  
 }
 
 
@@ -71,7 +72,41 @@ h6 {
 Button {
   background-color: aqua;
 }
+.videoTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 10px;
+  padding: 0;
+  color: black;
+  text-align: left;
+}
+.videoRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem;
+}
 
+.saveButton {
+  background-color: rgb(72, 73, 73);
+  border: 0 none;
+  color: white;
+  margin-top: 40px;
+  
+}
+.saveButton:hover {
+  background-color: rgb(155, 159, 160);
+  border: 0 none;
+  color: white;
+  margin-top: 40px;
+}
+.addNoteButton {
+  background-color: rgb(72, 73, 73);
+  border: 0 none;
+  color: white;
+  margin-top: 40px;
+  margin-left: 11px;
+}
 
 
 @media screen {

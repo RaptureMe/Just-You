@@ -4,7 +4,6 @@ import {
   Col,
   Form,
   Button,
-  Card,
   Row
 } from 'react-bootstrap';
 import { useMutation } from "@apollo/client";
@@ -25,6 +24,9 @@ const SearchVideos = () => {
 
   // create state to hold saved videoId values
   const [savedVideoIds, setSavedVideoIds] = useState(getSavedVideoIds());
+ 
+  const [handleAddNote] = 
+
 
   // create method to search for videos and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -87,69 +89,6 @@ const SearchVideos = () => {
 
   return (
     <>
-      {/* <div className="text-light bg-dark p-5">
-        <Container>
-          <h1>Search for Videos!</h1>
-          <Form onSubmit={handleFormSubmit}>
-            <Row>
-              <Col xs={12} md={8}>
-                <Form.Control
-                  name='searchInput'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Search for a video'
-                />
-              </Col>
-              <Col xs={12} md={4}>
-                <Button type='submit' variant='success' size='lg'>
-                  Submit Search
-                </Button>
-              </Col>
-            </Row>
-          </Form>
-        </Container>
-      </div>
-
-      <Container>
-        <h2 className='pt-5'>
-          {searchedVideos.length
-            ? `Viewing ${searchedVideos.length} results:`
-            : 'Search for a video to begin'}
-        </h2>
-        <Row>
-          {searchedVideos.map((video) => {
-            return (
-              <Col md="4" key={video.videoId}>
-                <Card border='dark'>
-                  {video.image ? (
-                    <Card.Img src={video.image} alt={`The thumbnail for ${video.title}`} variant='top' />
-                  ) : null}
-                  <Card.Body>
-                    <Card.Title>{video.title}</Card.Title>
-                    <p className='small'>Channels: {video.channels}</p>
-                    <Card.Text>{video.description}</Card.Text>
-                    {Auth.loggedIn() && (
-                      <Button
-                        disabled={savedVideoIds?.some((savedVideoId) => savedVideoId === video.videoId)}
-                        className='btn-block btn-info'
-                        onClick={() => handleSaveVideo(video.videoId)}>
-                        {savedVideoIds?.some((savedVideoId) => savedVideoId === video.videoId)
-                          ? 'This video has already been saved!'
-                          : 'Save this Video!'}
-                      </Button>
-                    )}
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
-      </Container>
-    </> */}
-
-      {/* Hero Section */}
       <div
         className="text-light bg-dark p-5"
         style={{
@@ -183,31 +122,40 @@ const SearchVideos = () => {
           </Form>
         </Container>
       </div>
-
-      {/* Content Section */}
-      <Container>
-        <h2 className="pt-5">
+    
+    <Container>
+        <h4 className="p-5">
           {searchedVideos.length
             ? `Viewing ${searchedVideos.length} results:`
             : ''}
-        </h2>
-        <Row>
-          {searchedVideos.map((video, index) => {
-            return (
-              <Col key={index} md="4">
-                <Card border="dark">
-                  {/* our content  */}
-                  <h1>{video.title}</h1>
-                  <a href={video.link}><img src={video.thumbnailURL} alt="" /></a>
-                </Card>
-              </Col>)
-          })}
-        </Row>
-      </Container >
+        </h4>
+        {searchedVideos.map((video, index) => (
+          <Row key={index} className="mb-4 align-items-start">
+            <Col xs="12" md="4">
+              <a href={video.link}>
+                <img src={video.thumbnailURL} alt="video thumbnails" className="img-fluid" />
+              </a>
+            </Col>
+            <Col xs="12" md="8" className="d-flex flex-column justify-content-between">
+              <div>
+                <h5>{video.title}</h5>
+              </div>
+              <div className="d-flex justify-content-start">
+                <Button className='saveButton' onClick={() => handleSaveVideo(video.id)}>
+                  Save
+                </Button>
+                <Button className='addNoteButton' onClick={() => handleAddNote(video.id)}>
+                  Add Note
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        ))}
+      </Container>
     </>
   );
 };
-
+ 
 export default SearchVideos;
 
 
