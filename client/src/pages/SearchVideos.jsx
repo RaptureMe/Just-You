@@ -24,6 +24,9 @@ const SearchVideos = () => {
 
   // create state to hold saved videoId values
   const [savedVideoIds, setSavedVideoIds] = useState(getSavedVideoIds());
+ 
+  const [handleAddNote] = 
+
 
   // create method to search for videos and set state on form submit
   const handleFormSubmit = async (event) => {
