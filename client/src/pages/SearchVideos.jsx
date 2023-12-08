@@ -12,6 +12,7 @@ import Auth from '../utils/auth';
 import { searchYtVideos } from '../utils/API';
 import { getSavedVideoIds } from '../utils/localStorage';
 import heroBackground from '../assets/hero-bg.png';
+
 // import videoId from ''
 // import videoBackground from '../assets/background-video.mp4';
 
@@ -79,8 +80,15 @@ const SearchVideos = () => {
     }
 
     try {
-      await SaveVideo({ variables: { video: videoToSave } });
-      // if video successfully saves to user's account, save book id to state
+      await SaveVideo({ variables: { video: {
+        videoId: videoToSave.videoId,
+        title: videoToSave.title,
+        description: videoToSave.description,
+        thumbnailURL: videoToSave.thumbnailURL,
+        link: videoToSave.link,
+        channelTitle: videoToSave.channelTitle
+      } } });
+      // if video successfully saves to user's account, save video id to state
       setSavedVideoIds([...savedVideoIds, videoToSave.videoId]);
     } catch (err) {
       console.error(err);
@@ -141,12 +149,12 @@ const SearchVideos = () => {
                 <h5>{video.title}</h5>
               </div>
               <div className="d-flex justify-content-start">
-                <Button className='saveButton' onClick={() => handleSaveVideo(video.id)}>
-                  Save
+                <Button className='saveButton' onClick={() => handleSaveVideo(video.videoId)}>
+                 Save
                 </Button>
-                <Button className='addNoteButton' onClick={() => handleAddNote(video.id)}>
+                {/* <Button className='addNoteButton' onClick={() => handleAddNote(video.videoId)}>
                   Add Note
-                </Button>
+                </Button> */}
               </div>
             </Col>
           </Row>

@@ -20,6 +20,7 @@ const SavedVideos = () => {
     ]
   });
   const {loading, data} = useQuery (QUERY_ME);
+  console.log(data);
   const savedVideos = data?.me.savedVideos || []
 
   // create function that accepts the video's mongo _id value as param and deletes the video from the database
@@ -48,7 +49,7 @@ const SavedVideos = () => {
     <>
       <div className="text-light bg-dark p-5">
         <Container>
-          <h1>Viewing saved videos!</h1>
+          <h1>Your saved videos!</h1>
         </Container>
       </div>
       <Container>
