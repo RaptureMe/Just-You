@@ -25,7 +25,7 @@ const SearchVideos = () => {
 
   // create state to hold saved videoId values
   const [savedVideoIds, setSavedVideoIds] = useState(getSavedVideoIds());
- 
+
   // const [handleAddNote] = 
 
 
@@ -54,7 +54,7 @@ const SearchVideos = () => {
             description: search.description,
             thumbnailURL: search ? search.thumbnail[0].url : "",
             viewCount: search.viewCount,
-            link: "https://www.youtube.com/embed/" + search.videoId,
+            link: "https://www.youtube.com/watch?v=" + search.videoId,
             channelTitle: search.channelTitle
           }
         }
@@ -80,14 +80,18 @@ const SearchVideos = () => {
     }
 
     try {
-      await SaveVideo({ variables: { video: {
-        videoId: videoToSave.videoId,
-        title: videoToSave.title,
-        description: videoToSave.description,
-        thumbnailURL: videoToSave.thumbnailURL,
-        link: videoToSave.link,
-        channelTitle: videoToSave.channelTitle
-      } } });
+      await SaveVideo({
+        variables: {
+          video: {
+            videoId: videoToSave.videoId,
+            title: videoToSave.title,
+            description: videoToSave.description,
+            thumbnailURL: videoToSave.thumbnailURL,
+            link: videoToSave.link,
+            channelTitle: videoToSave.channelTitle
+          }
+        }
+      });
       // if video successfully saves to user's account, save video id to state
       setSavedVideoIds([...savedVideoIds, videoToSave.videoId]);
     } catch (err) {
@@ -130,8 +134,8 @@ const SearchVideos = () => {
           </Form>
         </Container>
       </div>
-    
-    <Container>
+
+      <Container>
         <h4 className="p-5">
           {searchedVideos.length
             ? `Viewing ${searchedVideos.length} results:`
@@ -150,7 +154,7 @@ const SearchVideos = () => {
               </div>
               <div className="d-flex justify-content-start">
                 <Button className='saveButton' onClick={() => handleSaveVideo(video.videoId)}>
-                 Save
+                  Save
                 </Button>
                 {/* <Button className='addNoteButton' onClick={() => handleAddNote(video.videoId)}>
                   Add Note
@@ -163,7 +167,7 @@ const SearchVideos = () => {
     </>
   );
 };
- 
+
 export default SearchVideos;
 
 
