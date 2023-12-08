@@ -5,10 +5,10 @@ export const QUERY_ME = gql`
       me {
         username
         savedVideos {
-          channel
+          channels
           description
           videoId
-          image
+          thumbnailURL
           link
           title
         }
