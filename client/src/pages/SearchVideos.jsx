@@ -67,6 +67,9 @@ const SearchVideos = () => {
     }
   };
 
+
+    // Function to check if a video is saved
+    const isVideoSaved = (videoId) => savedVideoIds.includes(videoId);
   // create function to handle saving a video to our database
   const handleSaveVideo = async (videoId) => {
     // find the video in `searchedVideos` state by the matching id
@@ -101,7 +104,7 @@ const SearchVideos = () => {
         className="text-light bg-dark p-5"
         style={{
           backgroundImage: `url(${heroBackground})`,
-          // backgroundVideo: `url(${videoBackground})`,
+
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           height: '70vh',
@@ -149,12 +152,13 @@ const SearchVideos = () => {
                 <h5>{video.title}</h5>
               </div>
               <div className="d-flex justify-content-start">
-                <Button className='saveButton' onClick={() => handleSaveVideo(video.videoId)}>
-                 Save
+              <Button
+                  className='saveButton'
+                  onClick={() => handleSaveVideo(video.videoId)}
+                  disabled={isVideoSaved(video.videoId)}
+                >
+                  {isVideoSaved(video.videoId) ? 'Saved' : 'Save'}
                 </Button>
-                {/* <Button className='addNoteButton' onClick={() => handleAddNote(video.videoId)}>
-                  Add Note
-                </Button> */}
               </div>
             </Col>
           </Row>
