@@ -141,9 +141,6 @@ const SearchVideos = () => {
                 <Button className='saveButton' onClick={() => handleSaveVideo(video.id)}>
                   Save
                 </Button>
-                <Button className='addNoteButton' onClick={() => handleAddNote(video.id)}>
-                  Add Note
-                </Button>
               </div>
             </Col>
           </Row>

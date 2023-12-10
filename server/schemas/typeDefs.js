@@ -38,6 +38,18 @@ const typeDefs = `
     channelTitle: String
   }
 
+  type Note {
+    id: ID!
+    content: String!
+    user: User!
+    video: Video!
+  }
+  
+  input CreateNoteInput {
+    content: String!
+    videoId: ID!
+  }
+
   type Query {
     me: User
     getChannelData(channelName: String!): ChannelData
@@ -50,6 +62,7 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     saveVideo(video: VideoInput): User
     removeVideo(videoId: String!): User
+    createNote(input: CreateNoteInput!): Note 
   }
 `;
 

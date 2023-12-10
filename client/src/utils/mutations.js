@@ -38,3 +38,19 @@ mutation RemoveVideo($videoId: String!) {
   }
 }
   `
+  export const CREATE_NOTE = gql`
+  mutation CreateNote($input: CreateNoteInput!) {
+    createNote(input: $input) {
+      id
+      content
+      user {
+        _id
+        username
+      }
+      video {
+        videoId
+        title
+      }
+    }
+  }
+`

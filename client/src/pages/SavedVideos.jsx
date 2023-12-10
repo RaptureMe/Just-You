@@ -3,17 +3,24 @@ import {
   Card,
   Button,
   Row,
-  Col
+  Col,
+  Form
 } from 'react-bootstrap';
 
 import { useMutation, useQuery } from '@apollo/client';
-import {REMOVE_VIDEO} from "../utils/mutations";
+import {REMOVE_VIDEO, CREATE_NOTE} from "../utils/mutations";
 import {QUERY_ME} from "../utils/queries";
 import Auth from '../utils/auth';
 import { removeVideoId } from '../utils/localStorage';
 
 const SavedVideos = () => {
   const [RemoveVideo] = useMutation (REMOVE_VIDEO, {
+    refetchQueries: [
+      QUERY_ME,
+      'Me'
+    ]
+  });
+  const [CreateNote] = useMutation(CREATE_NOTE, {
     refetchQueries: [
       QUERY_ME,
       'Me'
@@ -34,6 +41,19 @@ const SavedVideos = () => {
       await RemoveVideo({variables: {videoId}});
       // upon success, remove video's id from localStorage
       removeVideoId(videoId);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const handleAddNote = async (videoId, content) => {
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      await CreateNote({ variables: { videoId, content } });
     } catch (err) {
       console.error(err);
     }
@@ -70,6 +90,19 @@ const SavedVideos = () => {
                     <Button className='btn-block btn-danger' onClick={() => handleDeleteVideo(video.videoId)}>
                       Delete this Video!
                     </Button>
+                    <Form onSubmit={(e) => {
+                      e.preventDefault();
+                      const content = e.target.content.value;
+                      handleAddNote(video.videoId, content);
+                    }}>
+                      <Form.Group controlId={`formNoteContent_${video.videoId}`}>
+                        <Form.Label>Notes</Form.Label>
+                        <Form.Control as="textarea" placeholder="Enter notes here" name="content" />
+                      </Form.Group>
+                      <Button variant="primary" type="submit">
+                        Add Note
+                      </Button>
+                    </Form>
                   </Card.Body>
                 </Card>
               </Col>
