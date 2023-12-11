@@ -1,9 +1,4 @@
-import {
-  Container,
-  Button,
-  Row,
-  Col
-} from 'react-bootstrap';
+import {Container,Button,Row,Col} from 'react-bootstrap';
 // import { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import {REMOVE_VIDEO} from "../utils/mutations";
@@ -27,7 +22,7 @@ const SavedVideos = () => {
 
 
 
-  // create function that accepts the video's mongo _id value as param and deletes the video from the database
+  // accepting the video's mongo _id value as param and deletes the video from the database
   const handleDeleteVideo = async (videoId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -44,44 +39,13 @@ const SavedVideos = () => {
     }
   };
 
-  // if data isn't here yet, say so
+ 
   if (loading) {
     return <h2>LOADING...</h2>;
   }
 
   return (
     <>
-      {/* <div className="text-light bg-dark p-5">
-        <Container>
-          <h1>Your saved videos!</h1>
-        </Container>
-      </div>
-      <Container>
-        <h2 className='pt-5'>
-          {savedVideos.length
-            ? `Viewing ${savedVideos.length} saved ${savedVideos.length === 1 ? 'video' : 'videos'}:`
-            : 'You have no saved videos!'}
-        </h2>
-        <Row>
-          {savedVideos.map((video) => {
-            return (
-              <Col md="4" key={video.videoId}>
-                <Card border='dark'>
-                  {video.image ? <Card.Img src={video.image} alt={`The cover for ${video.title}`} variant='top' /> : null}
-                  <Card.Body>
-                    <Card.Title>{video.title}</Card.Title>
-                    <p className='small'>Channels: {video.channels}</p>
-                    <Card.Text>{video.description}</Card.Text>
-                    <Button className='btn-block btn-danger' onClick={() => handleDeleteVideo(video.videoId)}>
-                      Delete this Video!
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
-      </Container> */}
 <div className="text-light bg-dark p-5 savedNav">
         <Container>
           <h1>  Saved Videos</h1>

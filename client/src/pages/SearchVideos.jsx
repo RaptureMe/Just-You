@@ -68,7 +68,7 @@ const SearchVideos = () => {
 
     // Function to check if a video is saved
   const isVideoSaved = (videoId) => savedVideoIds.includes(videoId);
-  // create function to handle saving a video to our database
+  // handle saving a video to our database
   const handleSaveVideo = async (videoId) => {
     // find the video in `searchedVideos` state by the matching id
     const videoToSave = searchedVideos.find((video) => video.videoId === videoId);
