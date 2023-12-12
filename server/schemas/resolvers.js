@@ -90,7 +90,7 @@ const resolvers = {
             channelTitle: data.channelTitle,
             thumbnailURL: data.thumbnail[0].url
           }
-        } 
+        }
         catch (error) {
           console.error(error);
         }
@@ -147,28 +147,28 @@ const resolvers = {
       throw AuthenticationError;
     },
     createNote: async (parent, { input }, context) => {
-        // Ensure the user is authenticated
-        if (!context.user) {
-          throw new AuthenticationError('You must be logged in to create a note.');
-        }
-  
-        const { content, videoId } = input;
-  
-        // Create a new note
-        const newNote = new Notes({
-          content,
-          user: context.user._id,
-          video: videoId,
-        });
-  
-        // DO I NEED TO ADD THE NOTESCHEMA TO MONGOOSE IN THE CONFIG?
-        // ********************************************************
-        // ******************************************************
-        await newNote.save();
-  
-        return newNote;
-      },
+      // Ensure the user is authenticated
+      if (!context.user) {
+        throw new AuthenticationError('You must be logged in to create a note.');
+      }
+      console.log(input);
+      const { content, videoId } = input;
+
+      // Create a new note
+      const newNote = new Notes({
+        content,
+        user: context.user._id,
+        video: videoId,
+      });
+
+      // DO I NEED TO ADD THE NOTESCHEMA TO MONGOOSE IN THE CONFIG?
+      // ********************************************************
+      // ******************************************************
+      await newNote.save();
+
+      return newNote;
     },
-  };
+  },
+};
 
 module.exports = resolvers;
