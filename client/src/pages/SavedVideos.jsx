@@ -39,12 +39,9 @@ const SavedVideos = () => {
   const savedVideos = data?.me.savedVideos || []
 
 
-<<<<<<< HEAD
   // create function that accepts the video's mongo _id value as param and deletes the video from the database
-=======
 
   // accepting the video's mongo _id value as param and deletes the video from the database
->>>>>>> main
   const handleDeleteVideo = async (videoId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 

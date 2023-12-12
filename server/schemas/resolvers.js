@@ -1,4 +1,4 @@
-const { User, Notes } = require('../models');
+const { User, Note } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
@@ -148,6 +148,9 @@ const resolvers = {
     },
     createNote: async (parent, { input }, context) => {
       // Ensure the user is authenticated
+      console.log('inside createNote\n')
+      console.log(input)
+      console.log(context.user)
       if (!context.user) {
         throw new AuthenticationError('You must be logged in to create a note.');
       }
@@ -155,12 +158,13 @@ const resolvers = {
       const { content, videoId } = input;
 
       // Create a new note
-      const newNote = new Notes({
+      const newNote = new Note({
         content,
         user: context.user._id,
-        video: videoId,
+        videoId: videoId,
       });
-
+      console.log('right before newNote')
+      console.log(newNote)
       // DO I NEED TO ADD THE NOTESCHEMA TO MONGOOSE IN THE CONFIG?
       // ********************************************************
       // ******************************************************
