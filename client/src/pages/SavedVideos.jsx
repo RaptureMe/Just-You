@@ -4,9 +4,10 @@ import {
   Button,
   Row,
   Col,
-  Form
+  Form,
+  Modal
 } from 'react-bootstrap';
-
+import { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import {REMOVE_VIDEO, CREATE_NOTE} from "../utils/mutations";
 import {QUERY_ME} from "../utils/queries";
@@ -14,6 +15,10 @@ import Auth from '../utils/auth';
 import { removeVideoId } from '../utils/localStorage';
 
 const SavedVideos = () => {
+    // CHECK THIS SECTION 
+    const [showModal, setShowModal] = useState(false);
+    const [noteContent, setNoteContent] = useState('');
+
   const [RemoveVideo] = useMutation (REMOVE_VIDEO, {
     refetchQueries: [
       QUERY_ME,
@@ -28,6 +33,7 @@ const SavedVideos = () => {
   });
   const {loading, data} = useQuery (QUERY_ME);
   const savedVideos = data?.me.savedVideos || []
+
 
   // create function that accepts the video's mongo _id value as param and deletes the video from the database
   const handleDeleteVideo = async (videoId) => {
@@ -45,6 +51,18 @@ const SavedVideos = () => {
       console.error(err);
     }
   };
+
+     //  opening and closing the modal
+     const handleShowModal = () => {
+      setShowModal(true);
+    };
+  
+    const handleCloseModal = () => {
+      setShowModal(false);
+    };
+
+
+  // CHECK THIS TO SEE IF CORRECT
   const handleAddNote = async (videoId, content) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -90,19 +108,43 @@ const SavedVideos = () => {
                     <Button className='btn-block btn-danger' onClick={() => handleDeleteVideo(video.videoId)}>
                       Delete this Video!
                     </Button>
-                    <Form onSubmit={(e) => {
-                      e.preventDefault();
-                      const content = e.target.content.value;
-                      handleAddNote(video.videoId, content);
-                    }}>
-                      <Form.Group controlId={`formNoteContent_${video.videoId}`}>
-                        <Form.Label>Notes</Form.Label>
-                        <Form.Control as="textarea" placeholder="Enter notes here" name="content" />
-                      </Form.Group>
-                      <Button variant="primary" type="submit">
-                        Add Note
-                      </Button>
-                    </Form>
+                    <Button
+                      className='btn-block btn-primary'
+                      onClick={() => {
+                        handleShowModal();
+                        setNoteContent(video.note || ''); // Set the initial content of the note
+                      }}
+                    >
+                      Add Note
+                    </Button>
+
+            
+                    <Modal show={showModal} onHide={handleCloseModal}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Add/Edit Note</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Form onSubmit={(e) => {
+                          e.preventDefault();
+                          handleAddNote(video.videoId, noteContent);
+                          handleCloseModal(); // Close the modal after adding/editing the note
+                        }}>
+                          <Form.Group controlId={`formNoteContent_${video.videoId}`}>
+                            <Form.Label>Notes</Form.Label>
+                            <Form.Control
+                              as="textarea"
+                              placeholder="Enter notes here"
+                              name="content"
+                              value={noteContent}
+                              onChange={(e) => setNoteContent(e.target.value)}
+                            />
+                          </Form.Group>
+                          <Button variant="primary" type="submit">
+                            Save Note
+                          </Button>
+                        </Form>
+                      </Modal.Body>
+                    </Modal>
                   </Card.Body>
                 </Card>
               </Col>
