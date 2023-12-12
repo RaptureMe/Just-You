@@ -5,10 +5,10 @@ export const QUERY_ME = gql`
       me {
         username
         savedVideos {
-          channel
+          channels
           description
           videoId
-          image
+          thumbnailURL
           link
           title
         }
@@ -26,14 +26,6 @@ export const CHANNELDATA = gql`
   }
 `;
 
-// export const SEARCH_VIDEO = gql`
-//   query searchVideo($queriedTitle: String!)
-//     searchVideo(queriedTitle: $queriedTitle) {
-//       videoID,
-//       videoTitle,
-//       thumbnailURL
-//     }
-// `;
 
 export const RENDER_VIDEO = gql`
     query renderVideo($videoID: String!) {

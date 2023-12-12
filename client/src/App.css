@@ -1,3 +1,4 @@
+/* Universal Style */
 body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
@@ -14,30 +15,25 @@ h6 {
 .small {
   font-weight: 300;
   font-style: italic;
-  
 }
-
-
-/* - - - header-top-bar - - - */
-
-/* .top-row {
-  display: flex;
-  align-items: center;
-} */
 .row{
   display: flex;
   align-items: center;
   padding:0%;
   margin-left: 20px;
 }
-.search-row{
-  display: flex;
-  justify-content: flex-end;
-  padding:0%;
-  margin-left: 50px;
-  margin-top: 200px;
+.thumbnail {
+  width: 50%; 
+  height: auto;
+  max-height: 150px;
+  margin-bottom: 20px;
 }
-
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+/* Navbar  */
 .navbar {
   border: 0 none;
   border-radius: 0;
@@ -46,6 +42,8 @@ h6 {
   position: relative;
   z-index: 999;
   background-color: rgb(245, 244, 244) !important;
+  box-shadow: 20px 5px 10px #888888;
+  font-size: 14px;
 }
 .link{
   display: flex;
@@ -56,6 +54,10 @@ h6 {
 .nav-link {
   margin: 0 1rem;
   color:rgb(17, 17, 17)
+}
+.nav-link:hover {
+  margin: 0 1rem;
+  color:rgb(57, 194, 221)
 }
 .logo {
   padding: 0 0;
@@ -72,6 +74,49 @@ h6 {
 Button {
   background-color: aqua;
 }
+.savedNav  {
+  background-color: rgb(32, 31, 31) !important;
+  border: 0 none;
+  border-radius: 0;
+  margin-bottom: 0;
+  padding-left: 70px;
+  position: relative;
+  z-index: 999;
+}
+
+
+/* Search Section */
+.search-row{
+  display: flex;
+  justify-content: flex-end;
+  padding:0%;
+  margin-left: 50px;
+  margin-top: 200px;
+}
+video {
+  width: fit-content;
+   height: 70vh;
+  margin-top: 50px;
+  max-width: 980px;
+ }
+ .vid-container {
+   position: relative;
+   display: flex;
+   justify-content: center;
+   width: 100%;
+    height: 70vh;
+    margin-bottom: 100px;
+ }
+.hero {
+width: 100%;
+  margin-bottom: 30px;
+  margin-top: 50px;
+ max-width: 980px;
+ box-shadow: 10px 10px 10px #888888;
+}
+
+
+/* Search Results */
 .videoTitle {
   font-size: 1rem;
   font-weight: 700;
@@ -87,12 +132,18 @@ Button {
   margin: 1rem;
 }
 
+.img-fluid {
+  max-width: 100%; 
+  height: auto;
+  max-height: 150px;
+  margin-bottom: 20px;
+  box-shadow: 5px 5px 5px #888888;
+}
 .saveButton {
   background-color: rgb(72, 73, 73);
   border: 0 none;
   color: white;
   margin-top: 40px;
-  
 }
 .saveButton:hover {
   background-color: rgb(155, 159, 160);
@@ -100,13 +151,63 @@ Button {
   color: white;
   margin-top: 40px;
 }
+.saveButton.saved {
+  background-color: #27ae60 !important; 
+  color: #fff;
+  border: 0 none;
+  margin-top: 40px;
+}
+
+
+/* Saved Page Style */
 .addNoteButton {
   background-color: rgb(72, 73, 73);
   border: 0 none;
   color: white;
   margin-top: 40px;
-  margin-left: 10px;
+  margin-left: 11px;
 }
+.deleteButton {
+  background-color: rgb(233, 14, 14);
+  border: 0 none;
+  color: white;
+  margin-top: 40px;
+  font-size: 12px
+}
+
+/* Footer */
+.footerArea {
+  background-color: rgb(245, 244, 244);
+  color: rgb(14, 14, 14);
+  padding: 10px;
+  margin-top: 50px;  
+  box-shadow: 10px 0px 5px 3px #888888;
+}
+
+.footerContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.tagline p {
+ margin-top: 0px;
+}
+
+.footer-logo {
+  transition: all 0.3s ease 0s;
+}
+
+.logoContainer {
+  margin-right: 0px;
+}
+
+.footer-copyright {
+  text-align: center;
+  font-size: small;
+  color:aliceblue;
+}
+
 
 
 @media screen {

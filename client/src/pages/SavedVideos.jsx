@@ -14,6 +14,9 @@ import {QUERY_ME} from "../utils/queries";
 import Auth from '../utils/auth';
 import { removeVideoId } from '../utils/localStorage';
 
+
+
+
 const SavedVideos = () => {
     // CHECK THIS SECTION 
     const [showModal, setShowModal] = useState(false);
@@ -32,10 +35,16 @@ const SavedVideos = () => {
     ]
   });
   const {loading, data} = useQuery (QUERY_ME);
+  console.log(data);
   const savedVideos = data?.me.savedVideos || []
 
 
+<<<<<<< HEAD
   // create function that accepts the video's mongo _id value as param and deletes the video from the database
+=======
+
+  // accepting the video's mongo _id value as param and deletes the video from the database
+>>>>>>> main
   const handleDeleteVideo = async (videoId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -84,9 +93,9 @@ const SavedVideos = () => {
 
   return (
     <>
-      <div className="text-light bg-dark p-5">
+<div className="text-light bg-dark p-5 savedNav">
         <Container>
-          <h1>Viewing saved videos!</h1>
+          <h1>  Saved Videos</h1>
         </Container>
       </div>
       <Container>

@@ -92,7 +92,5 @@ export const searchYtChannel = async (query) => {
   } catch (error) {
     console.error(error);
   }
-  // return fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${query}&key=${process.env.REACT_APP_KEY}`).then (response => response.json()).then (channelData => {
-  //   fetch (`https://yt.lemnoslife.com/channels?handle=@${channelData.}`)
-  // });
+  
 };
