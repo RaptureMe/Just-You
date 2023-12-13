@@ -1,11 +1,13 @@
-const { User, Thought } = require('../models');
+const { User, Note } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id });
+        // const userData = 
+
+        return await User.findOne({ _id: context.user._id }).populate('notes');
       }
       throw AuthenticationError;
     },
@@ -104,7 +106,7 @@ const resolvers = {
             channelTitle: data.channelTitle,
             thumbnailURL: data.thumbnail[0].url
           }
-        } 
+        }
         catch (error) {
           console.error(error);
         }
@@ -158,6 +160,37 @@ const resolvers = {
         return user;
       }
       throw AuthenticationError;
+    },
+    createNote: async (parent, {videoId, content} , context) => {
+      // Ensure the user is authenticated
+      console.log('inside createNote\n')
+      // console.log(NoteInput)
+      console.log(context.user)
+      if (!context.user) {
+        throw new AuthenticationError('You must be logged in to create a note.');
+      }
+      // console.log(NoteInput);
+      // const { content, videoId } = NoteInput;
+
+      // Create a new note
+      const note = await Note.create({
+        content,
+        videoId,
+        user: context.user._id,
+      });
+
+      console.log('right before newNote')
+      console.log(note)
+      // DO I NEED TO ADD THE NOTESCHEMA TO MONGOOSE IN THE CONFIG?
+      // ********************************************************
+      // ******************************************************
+      // await newNote.save();
+      await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { notes: note._id  } },
+        { new: true }
+      );
+      return note;
     },
   },
 };

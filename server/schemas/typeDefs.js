@@ -1,4 +1,5 @@
-const typeDefs = `
+const gql = String.raw
+const typeDefs = gql`
   type Channel {
     viewCount: String,
 		subscriberCount: String,
@@ -12,7 +13,7 @@ const typeDefs = `
     email: String
     password: String
     savedVideos: [Video]
-    savedChannels: [Channel]
+    notes: [Note]
   }
 
   type Auth {
@@ -28,6 +29,7 @@ const typeDefs = `
     link: String
     thumbnailURL: String
     channelTitle: String
+    note: Note
   }
 
   input VideoInput {
@@ -38,6 +40,19 @@ const typeDefs = `
     link: String
     thumbnailURL: String
     channelTitle: String
+  }
+
+  type Note {
+    id: ID!
+    content: String!
+    user: User!
+    videoId: String!
+    video: Video!
+  }
+  
+  input NoteInput {
+    content: String!
+    videoId: ID!
   }
 
   type Query {
@@ -52,6 +67,7 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     saveVideo(video: VideoInput): User
     removeVideo(videoId: String!): User
+    createNote(videoId: String!, content: String!): Note 
   }
 `;
 

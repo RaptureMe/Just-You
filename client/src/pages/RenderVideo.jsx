@@ -1,5 +1,4 @@
 import "../assets/RenderVideo.css";
-import React from 'react';
 import { useRef, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import ReactPlayer from 'react-player';
@@ -8,7 +7,7 @@ import { useQuery, useLazyQuery } from '@apollo/client';
 import { Spinner } from "react-bootstrap";
 import likesImage from "../assets/commentLikeIcon.jpeg";
 import movieTheatre from "../assets/renderedVideoBackground.png"
-import { RENDER_VIDEO, GET_CHANNELDATA, GET_RECOMMENDED, GET_COMMENTS } from "../utils/queries";
+import { RENDER_VIDEO, GET_CHANNELDATA } from "../utils/queries";
 
 const RenderVideo = () => {
   const navigate = useNavigate();
