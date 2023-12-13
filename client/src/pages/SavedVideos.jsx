@@ -84,6 +84,7 @@ const SavedVideos = () => {
       console.log('add note')
       // console.log(NoteInput)
       await CreateNote({ variables:{videoId,content}} );
+      await refetch();
       handleCloseModal(); 
     } catch (err) {
       console.error(err);
@@ -138,7 +139,7 @@ const SavedVideos = () => {
 
               <div>
                 <h6 className='renderedNotes'>Note:</h6>
-                <p>{video.note || 'No notes available'}</p>
+                <p>{noteContent || 'No notes available'}</p>
               </div>
             </Col>
           </Row>

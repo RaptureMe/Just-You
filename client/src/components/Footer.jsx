@@ -28,7 +28,7 @@ const Footer = () => {
                 <h5 className="title">LINKS</h5>
                 <ul className="list-unstyled">
                   <li>
-                    <Link to="/SearchVideos" className="text-decoration-none text-dark">
+                    <Link to="/" className="text-decoration-none text-dark">
                       Search
                     </Link>
                   </li>
