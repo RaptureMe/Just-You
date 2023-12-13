@@ -1,0 +1,259 @@
+.linebreak {
+    flex-basis: 100%;
+    height: 2px;
+}
+
+#renderVideoPage {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 15px;
+}
+
+.videoDetails {
+    font-size: 30px;
+}
+
+#videoTitle {
+    font-weight: bold;
+}
+
+#channelContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+#channelAuthorContainer {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#channelProfilePic {
+    margin-left: 10px;
+    border-radius: 50%;
+}
+
+#videoContainer {
+    width: 90%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.formattedVideo {
+    width: 500px !important;
+    height: 420px !important;
+    border: 15px solid black;
+    border-radius: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0px 0px 5px 2px #000;
+    cursor: pointer;
+}
+
+.backgroundImage {
+    width: 750px !important;
+    z-index: -1;
+    position: relative;
+    bottom: 465px;
+}
+
+#recommendedSectionContainer {
+    width: 630px;
+    height: 100vw;
+    margin-right: 20px;
+}
+
+#recommendedVideo {
+    height: 120px;
+}
+
+#recommendedThumbnail {
+    border-radius: 8%;
+    width: 168px;
+    height: 94px;
+    box-shadow: 5px 5px 5px #888888;
+    margin-right: 15px;
+}
+
+#recommendedVideoContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100px;
+    cursor: pointer;
+}
+
+#recommendedDetails {
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap
+}
+
+#recommendedTitle {
+    font-weight: bold;
+    font-size: 12.5px;
+    height: 40px;
+    margin-top: -12px;
+    margin-left: 2px;
+}
+
+#recommendedChannel, #recommendedViewCount {
+    font-size: 11px;
+    margin-top: -22px;
+    margin-left: 2px;
+}
+
+#recommendedViewCount {
+    margin-top: -25px;
+}
+
+#videoLengthBackground {
+    border-radius: 7%;
+    background-color: black;
+    opacity: 0.9;
+    position: relative;
+    bottom: 29px;
+    width: 50px;
+    left: 112px;
+    z-index: 2;
+}
+
+#videoLengthBackgroundWider {
+    border-radius: 7%;
+    background-color: black;
+    opacity: 0.9;
+    position: relative;
+    bottom: 29px;
+    width: 70px;
+    left: 90px;
+    z-index: 2;
+}
+
+
+#videoLength {
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.truncate {
+    width: 140px;
+    max-width: 140px; /* Set the maximum height */
+  overflow-y: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Adjust the number of lines to display */
+  -webkit-box-orient: vertical;
+}
+
+#commentSectionContainer {
+    padding-right: 50px;
+    margin-left: 10px;
+    margin-top: 25px;
+}
+
+#commentContainer {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#commentSectionInfoContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+    margin-left: 15px;
+}
+
+#commentCount {
+    font-size: 25px;
+    margin-bottom: -15px;
+    margin-left: -10px;
+    font-weight: bold;
+}
+
+#addCommentInput {
+    width: 90%;
+    border: none;
+    border-bottom: 2px solid black;
+}
+
+#commenterInfo {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#commenterName {
+    margin-right: 10px;
+}
+
+#commentProfilePic {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+#likesContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-top: -17px;
+    margin-bottom: 15px;
+}
+
+#likesImage {
+    width: 20px;
+    height: 20px;
+    margin-left: 15px;
+}
+
+#likes {
+    margin-left: 5px;
+}
+
+#noRecommendedVideos {
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+}
+
+#commentsAndVideoContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#videoAndBackgroundContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    margin-bottom: -450px;
+}
+
+#renderedVideoDetails {
+    width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media screen and (max-width: 1100px) {
+    #renderedVideoDetails {
+    }
+    .formattedVideo {
+        width: 400px !important;
+        height: 420px !important;
+        border: 15px solid black;
+        border-radius: 5%;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0px 0px 5px 2px #000;
+        cursor: pointer;
+    }
+    
+    .backgroundImage {
+        width: 550px !important;
+        z-index: -1;
+        position: relative;
+        bottom: 465px;
+    }
+}
