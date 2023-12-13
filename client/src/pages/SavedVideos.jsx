@@ -40,9 +40,8 @@ const SavedVideos = () => {
   // console.log(data);
   const savedVideos = data?.me.savedVideos || [];
   const notes = data?.me.notes || [];
+  console.log(notes); // Added console.log to see the 'notes' variable
 
-
-  // create function that accepts the video's mongo _id value as param and deletes the video from the database
 
   // accepting the video's mongo _id value as param and deletes the video from the database
   const handleDeleteVideo = async (videoId) => {
@@ -85,16 +84,13 @@ const SavedVideos = () => {
       console.log('add note')
       // console.log(NoteInput)
       await CreateNote({ variables:{videoId,content}} );
+      handleCloseModal(); 
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleViewNote = (video) => {
-    console.log(video)
-    setSelectedVideo(video);
-    setNoteContent(video.note || '');
-  };
+ 
 
 
   // if data isn't here yet, say so
@@ -130,12 +126,6 @@ const SavedVideos = () => {
                 Delete!
               </Button>
               <Button
-                className='viewButton btn-block btn-info'
-                onClick={() => handleViewNote(video)}
-              >
-                View Note
-              </Button>
-              <Button
                 className='addButton btn-block btn-primary'
                 onClick={() => {
                   setSelectedVideo(video);
@@ -145,6 +135,11 @@ const SavedVideos = () => {
               >
                 Add Note
               </Button>
+
+              <div>
+                <h6 className='renderedNotes'>Note:</h6>
+                <p>{video.note || 'No notes available'}</p>
+              </div>
             </Col>
           </Row>
         ))}
@@ -182,3 +177,5 @@ const SavedVideos = () => {
 };
 
 export default SavedVideos;
+
+
