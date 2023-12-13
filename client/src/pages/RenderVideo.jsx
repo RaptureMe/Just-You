@@ -15,8 +15,7 @@ const RenderVideo = () => {
   const { videoId } = useParams();
   const [videoData, setVideoData] = useState(null);
   const [channelData, setChannelData] = useState(null);
-  //const [recommendedData, setRecommendedData] = useState([]);
-  const recommendedData = false;
+  const [recommendedData, setRecommendedData] = useState([]);
   const [commentData, setCommentData] = useState([]);
   useEffect(() => {
     window.scrollTo(0, 0);
