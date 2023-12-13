@@ -43,8 +43,9 @@ const SavedVideos = () => {
   // });
 
   const {loading, data} = useQuery (QUERY_ME);
-  console.log(data);
-  const savedVideos = data?.me.savedVideos || []
+  // console.log(data);
+  const savedVideos = data?.me.savedVideos || [];
+  const notes = data?.me.notes || [];
 
 
   // create function that accepts the video's mongo _id value as param and deletes the video from the database
@@ -86,17 +87,17 @@ const SavedVideos = () => {
 
     try {
       console.log(content)
-      const NoteInput = {"videoId": videoId, "content": content}
+      // const NoteInput = {"videoId": videoId, "content": content}
       console.log('add note')
-      console.log(NoteInput)
-      await CreateNote({ variables:{videoId, content} });
+      // console.log(NoteInput)
+      await CreateNote({ variables:{videoId,content}} );
     } catch (err) {
       console.error(err);
     }
   };
 
   const handleViewNote = (video) => {
-    
+    console.log(video)
     setSelectedVideo(video);
     setNoteContent(video.note || '');
     setShowModal(true);

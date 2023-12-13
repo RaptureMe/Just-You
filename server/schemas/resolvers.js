@@ -161,16 +161,16 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    createNote: async (parent, { NoteInput }, context) => {
+    createNote: async (parent, {videoId, content} , context) => {
       // Ensure the user is authenticated
       console.log('inside createNote\n')
-      console.log(NoteInput)
+      // console.log(NoteInput)
       console.log(context.user)
       if (!context.user) {
         throw new AuthenticationError('You must be logged in to create a note.');
       }
-      console.log(NoteInput);
-      const { content, videoId } = NoteInput;
+      // console.log(NoteInput);
+      // const { content, videoId } = NoteInput;
 
       // Create a new note
       const note = await Note.create({
