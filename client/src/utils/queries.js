@@ -38,3 +38,12 @@ export const RENDER_VIDEO = gql`
       }
     }
 `;
+
+export const GET_NOTE = gql`
+  query getNote {
+    getNote {
+      _id
+      content
+    }
+  }
+`;

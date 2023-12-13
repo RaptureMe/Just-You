@@ -34,6 +34,14 @@ const SavedVideos = () => {
       'Me'
     ]
   });
+
+  // const [showNote] = useMutation(GET_NOTE, {
+  //   refetchQueries: [
+  //     QUERY_ME,
+  //     'Me'
+  //   ]
+  // });
+
   const {loading, data} = useQuery (QUERY_ME);
   console.log(data);
   const savedVideos = data?.me.savedVideos || []
@@ -83,13 +91,16 @@ const SavedVideos = () => {
     }
   };
 
+  
+
+
   // if data isn't here yet, say so
   if (loading) {
     return <h2>LOADING...</h2>;
   }
 
   return (
-    <>
+  <>
 <div className="text-light bg-dark p-5 savedNav">
         <Container>
           <h1>  Saved Videos</h1>
@@ -124,7 +135,14 @@ const SavedVideos = () => {
                       Add Note
                     </Button>
 
-            
+                    {/* <Button
+                      className='btn-block btn-primary'
+                      onClick={() => {
+                        handleShowModal();// Set the initial content of the note
+                      }}
+                    >
+                      view Note
+                    </Button> */}
                     <Modal show={showModal} onHide={handleCloseModal}>
                       <Modal.Header closeButton>
                         <Modal.Title>Add/Edit Note</Modal.Title>
@@ -136,7 +154,7 @@ const SavedVideos = () => {
                           handleCloseModal(); // Close the modal after adding/editing the note
                         }}>
                           <Form.Group controlId={`formNoteContent_${video.videoId}`}>
-                            <Form.Label>Notes</Form.Label>
+                            <Form.Label>Note</Form.Label>
                             <Form.Control
                               as="textarea"
                               placeholder="Enter notes here"
@@ -162,4 +180,52 @@ const SavedVideos = () => {
   );
 };
 
+
+      {/* <div className="text-light bg-dark p-5">
+        <Container>
+          <h1>Viewing saved videos!</h1>
+        </Container>
+      </div>
+      <Container>
+        <h2 className='pt-5'>
+          {savedVideos.length
+            ? `Viewing ${savedVideos.length} saved ${savedVideos.length === 1 ? 'video' : 'videos'}:`
+            : 'You have no saved videos!'}
+        </h2>
+        <Row>
+          {savedVideos.map((video) => {
+            return (
+              <Col md="4" key={video.videoId}>
+                <Card border='dark'>
+                  {video.image ? <Card.Img src={video.image} alt={`The cover for ${video.title}`} variant='top' /> : null}
+                  <Card.Body>
+                    <Card.Title>{video.title}</Card.Title>
+                    <p className='small'>Channels: {video.channels}</p>
+                    <Card.Text>{video.description}</Card.Text>
+                    <Button className='btn-block btn-danger' onClick={() => handleDeleteVideo(video.videoId)}>
+                      Delete this Video!
+                    </Button>
+                    <Form onSubmit={(e) => {
+                      e.preventDefault();
+                      const content = e.target.content.value;
+                      handleAddNote(video.videoId, content);
+                    }}>
+                      <Form.Group controlId={`formNoteContent_${video.videoId}`}>
+                        <Form.Label>Notes</Form.Label>
+                        <Form.Control as="textarea" placeholder="Enter notes here" name="content" />
+                      </Form.Group>
+                      <Button variant="primary" type="submit">
+                        Add Note
+                      </Button>
+                    </Form>
+                  </Card.Body>
+                </Card>
+              </Col>
+            );
+          })}
+        </Row>
+      </Container>
+    </>
+  );
+}; */}
 export default SavedVideos;

@@ -55,6 +55,7 @@ const typeDefs = `
     getChannelData(channelName: String!): ChannelData
     searchVideo(queriedTitle: String!): [Video]
     renderVideo(videoID: String!): Video
+    getNote(content: String!, videoId: String!): Note
   }
 
   type Mutation {
