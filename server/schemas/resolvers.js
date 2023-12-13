@@ -11,10 +11,11 @@ const resolvers = {
     },
     getChannelData: async (parent, { channelName }, context) => {
       const url = 'https://youtube-v2.p.rapidapi.com/channel/id?channel_name=' + channelName;
+       
       const options = {
         method: 'GET',
         headers: {
-          'X-RapidAPI-Key': '960b967ce9msh6666b8331ce42fdp122b75jsn89f1498616db',
+          'X-RapidAPI-Key': '8fba63d966msh00c2856b3750933p19960ejsn74beb5027bf8',
           'X-RapidAPI-Host': 'youtube-v2.p.rapidapi.com'
         },
       };
@@ -22,13 +23,26 @@ const resolvers = {
       try {
         const response = await fetch(url, options);
         const result = await response.json();
-        const searchRes = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${result.channel_id}&key=AIzaSyCLjVLclOGVy4uIMGD5EEAK1r0LFKGjGJw`);
-        const search = await searchRes.json()
-        console.log(search)
+        const channelStatistics = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${result.channel_id}&key=AIzaSyCLjVLclOGVy4uIMGD5EEAK1r0LFKGjGJw`);
+        const searchedStatistic = await channelStatistics.json();
+        
+
+        const options2 = {
+          method: 'GET',
+          headers: {
+            'X-RapidAPI-Key': '54d11cd2eemsh454f58db3f8dfa5p11166bjsn44a3e0bd378b',
+            'X-RapidAPI-Host': 'youtube138.p.rapidapi.com'
+          }
+        };
+        const channelPictureURL = `https://youtube138.p.rapidapi.com/channel/details/?id=${result.channel_id}&hl=en&gl=US`;
+        const channelPictureURLData = await fetch(channelPictureURL, options2);
+        const channelPictureURLResponse = await channelPictureURLData.json();
+        console.log(channelPictureURLResponse);
         return {
-          viewCount: search.items[0].statistics.viewCount,
-          subscriberCount: search.items[0].statistics.subscriberCount,
-          videoCount: search.items[0].statistics.videoCount
+          viewCount: searchedStatistic.items[0].statistics.viewCount.toString(),
+          subscriberCount: searchedStatistic.items[0].statistics.subscriberCount.toString(),
+          videoCount: searchedStatistic.items[0].statistics.videoCount.toString(),
+          profilePictureURL: channelPictureURLResponse.avatar[0].url
         };
       } catch (error) {
         console.error(error);
@@ -58,7 +72,7 @@ const resolvers = {
               videoThumbnail = video.thumbnail[0].url;
             }
             return {
-              videoTitle: video.title,
+              title: video.title,
               videoID: video.videoId,
               thumbnailURL: videoThumbnail,
             }
@@ -85,7 +99,7 @@ const resolvers = {
           const data = await response.json();
           return {
             link: "https://www.youtube.com/watch?v=" + data.id,
-            videoTitle: data.title,
+            title: data.title,
             description: data.description,
             channelTitle: data.channelTitle,
             thumbnailURL: data.thumbnail[0].url
@@ -95,9 +109,8 @@ const resolvers = {
           console.error(error);
         }
       }
-    }
+    },
   },
-
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
