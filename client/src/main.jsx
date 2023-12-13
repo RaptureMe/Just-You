@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'material-icons/iconfont/material-icons.css';
 import App from './App.jsx'
 import SearchVideos from './pages/SearchVideos'
+import RenderVideo from "./pages/RenderVideo.jsx"
 import SavedVideos from './pages/SavedVideos'
 
 const router = createBrowserRouter([
@@ -15,7 +16,12 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <SearchVideos />
-      }, {
+      }, 
+      {
+        path: "/renderVideo/:videoId",
+        element: <RenderVideo />
+      },
+      {
         path: '/saved',
         element: <SavedVideos />
       }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import {Container,Col,Form,Button,Row} from 'react-bootstrap';
 import { useMutation } from "@apollo/client";
 import { SAVE_VIDEO } from '../utils/mutations';
@@ -9,6 +10,8 @@ import justyouvid from '../assets/background-video.mp4';
 import heroBackground from '../assets/hero-bg.png';
 
 const SearchVideos = () => {
+  const navigate = useNavigate();
+
   const [SaveVideo] = useMutation(SAVE_VIDEO)
   // create state for holding returned youtube api data
   const [searchedVideos, setSearchedVideos] = useState([]);
@@ -17,6 +20,10 @@ const SearchVideos = () => {
   // create state to hold saved videoId values
   const [savedVideoIds, setSavedVideoIds] = useState(getSavedVideoIds());
   const [videoEnded, setVideoEnded] = useState(false);
+
+  const renderVideoPage = async (videoId) => {
+    navigate(`/renderVideo/${videoId}`);
+  }
   
   useEffect(() => {
     const hasVisited = localStorage.getItem('hasVisited');
@@ -157,9 +164,9 @@ const SearchVideos = () => {
             : ''}
         </h4>
         {searchedVideos.map((video, index) => (
-          <Row key={index} className="mb-4 align-items-start">
+          <Row key={index} className="mb-4 align-items-start pointerEffect" data-video-id = {video.videoId} onClick = {() => renderVideoPage(video.videoId)}>
             <Col xs="12" md="4">
-              <a href={video.link}>
+              <a>
                 <img src={video.thumbnailURL} alt="video thumbnails" className="img-fluid" />
               </a>
             </Col>

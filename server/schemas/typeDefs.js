@@ -1,8 +1,9 @@
 const typeDefs = `
-  type ChannelData {
-    viewCount: Int,
-		subscriberCount: Int,
-		videoCount: Int
+  type Channel {
+    viewCount: String,
+		subscriberCount: String,
+		videoCount: String
+    profilePictureURL: String
   }
 
   type User {
@@ -11,6 +12,7 @@ const typeDefs = `
     email: String
     password: String
     savedVideos: [Video]
+    savedChannels: [Channel]
   }
 
   type Auth {
@@ -40,7 +42,7 @@ const typeDefs = `
 
   type Query {
     me: User
-    getChannelData(channelName: String!): ChannelData
+    getChannelData(channelName: String!): Channel
     searchVideo(queriedTitle: String!): [Video]
     renderVideo(videoID: String!): Video
   }
