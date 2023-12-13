@@ -6,35 +6,35 @@ import LoginForm from './LoginForm';
 import 'material-icons/iconfont/material-icons.css';
 import Auth from '../utils/auth';
 import logo from '../assets/logo.png';
+import '../App.css';
 
 const AppNavbar = () => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
+  
 
   return (
     <>
-      <Navbar bg='dark' variant='dark' expand='lg'>
+         <Navbar bg='dark' variant='dark' expand='lg'>
         <Container fluid>
-          <Navbar.Brand as={Link} to='/'
-           className="logo">
-              <img src={logo} alt="main logo" height="90px"/>
+          <Navbar.Brand as={Link} to='/' className="logo">
+            <img src={logo} alt="main logo" height="90px" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
-          <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
-            <Nav className='ml-auto d-flex'>
-              <Nav.Link as={Link} to='/' className='d-none d-lg-block'>
+          <Navbar.Collapse id='navbar'>
+            <Nav className='ml-auto'>
+              <Nav.Link as={Link} to='/' className='nav-link'>
                 Search For Videos
               </Nav.Link>
-              {/* if user is logged in show saved videos*/}
               {Auth.loggedIn() ? (
                 <>
-                  <a className = "nav-link d-none d-lg-block" href='/saved'>
+                  <a className="nav-link" href='/saved'>
                     Your Videos
                   </a>
-                  <Nav.Link onClick={Auth.logout} className='d-none d-lg-block'>Logout</Nav.Link>
+                  <Nav.Link onClick={Auth.logout} className='nav-link'>Logout</Nav.Link>
                 </>
               ) : (
-                <Nav.Link onClick={() => setShowModal(true)} className='d-none d-lg-block'>Login/Sign Up</Nav.Link>
+                <Nav.Link onClick={() => setShowModal(true)} className='nav-link'>Login/Sign Up</Nav.Link>
               )}
             </Nav>
           </Navbar.Collapse>

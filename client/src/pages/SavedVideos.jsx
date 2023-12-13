@@ -1,6 +1,5 @@
 import {
   Container,
-  Card,
   Button,
   Row,
   Col,
@@ -21,6 +20,7 @@ const SavedVideos = () => {
     // CHECK THIS SECTION 
     const [showModal, setShowModal] = useState(false);
     const [noteContent, setNoteContent] = useState('');
+    const [selectedVideo, setSelectedVideo] = useState(null);
 
   const [RemoveVideo] = useMutation (REMOVE_VIDEO, {
     refetchQueries: [
@@ -85,13 +85,22 @@ const SavedVideos = () => {
     }
 
     try {
-      await CreateNote({ variables: { videoId, content } });
+      console.log(content)
+      const NoteInput = {"videoId": videoId, "content": content}
+      console.log('add note')
+      console.log(NoteInput)
+      await CreateNote({ variables:{videoId, content} });
     } catch (err) {
       console.error(err);
     }
   };
 
-  
+  const handleViewNote = (video) => {
+    
+    setSelectedVideo(video);
+    setNoteContent(video.note || '');
+    setShowModal(true);
+  };
 
 
   // if data isn't here yet, say so
@@ -103,129 +112,79 @@ const SavedVideos = () => {
   <>
 <div className="text-light bg-dark p-5 savedNav">
         <Container>
-          <h1>  Saved Videos</h1>
+          <h1>Saved Videos</h1>
         </Container>
       </div>
       <Container>
-        <h2 className='pt-5'>
+        <h3 className='pt-5'>
           {savedVideos.length
             ? `Viewing ${savedVideos.length} saved ${savedVideos.length === 1 ? 'video' : 'videos'}:`
             : 'You have no saved videos!'}
-        </h2>
-        <Row>
-          {savedVideos.map((video) => {
-            return (
-              <Col md="4" key={video.videoId}>
-                <Card border='dark'>
-                  {video.image ? <Card.Img src={video.image} alt={`The cover for ${video.title}`} variant='top' /> : null}
-                  <Card.Body>
-                    <Card.Title>{video.title}</Card.Title>
-                    <p className='small'>Channels: {video.channels}</p>
-                    <Card.Text>{video.description}</Card.Text>
-                    <Button className='btn-block btn-danger' onClick={() => handleDeleteVideo(video.videoId)}>
-                      Delete this Video!
-                    </Button>
-                    <Button
-                      className='btn-block btn-primary'
-                      onClick={() => {
-                        handleShowModal();
-                        setNoteContent(video.note || ''); // Set the initial content of the note
-                      }}
-                    >
-                      Add Note
-                    </Button>
+        </h3>
+        {savedVideos.map((video) => (
+          <Row key={video.videoId} className="my-3">
+            <Col xs="12" md="6">
+              {video.thumbnailURL && (
+                <img src={video.thumbnailURL} alt="video thumbnail" className="img-fluid" />
+              )}
+            </Col>
+            <Col xs="12" md="6">
+              <h5>{video.title}</h5>
+              
+              
+              <Button className='deleteButton btn-block btn-danger' onClick={() => handleDeleteVideo(video.videoId)}>
+                Delete!
+              </Button>
+              <Button
+                className='viewButton btn-block btn-info'
+                onClick={() => handleViewNote(video)}
+              >
+                View Note
+              </Button>
+              <Button
+                className='addButton btn-block btn-primary'
+                onClick={() => {
+                  setSelectedVideo(video);
+                  handleShowModal();
+                  setNoteContent(video.note || ''); // Set the initial content of the note
+                }}
+              >
+                Add Note
+              </Button>
+            </Col>
+          </Row>
+        ))}
 
-                    {/* <Button
-                      className='btn-block btn-primary'
-                      onClick={() => {
-                        handleShowModal();// Set the initial content of the note
-                      }}
-                    >
-                      view Note
-                    </Button> */}
-                    <Modal show={showModal} onHide={handleCloseModal}>
-                      <Modal.Header closeButton>
-                        <Modal.Title>Add/Edit Note</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <Form onSubmit={(e) => {
-                          e.preventDefault();
-                          handleAddNote(video.videoId, noteContent);
-                          handleCloseModal(); // Close the modal after adding/editing the note
-                        }}>
-                          <Form.Group controlId={`formNoteContent_${video.videoId}`}>
-                            <Form.Label>Note</Form.Label>
-                            <Form.Control
-                              as="textarea"
-                              placeholder="Enter notes here"
-                              name="content"
-                              value={noteContent}
-                              onChange={(e) => setNoteContent(e.target.value)}
-                            />
-                          </Form.Group>
-                          <Button variant="primary" type="submit">
-                            Save Note
-                          </Button>
-                        </Form>
-                      </Modal.Body>
-                    </Modal>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
+        {/* Modal for adding/editing notes */}
+        <Modal show={showModal} onHide={handleCloseModal}>
+          <Modal.Header closeButton>
+          <Modal.Title>{selectedVideo?.title || 'Add/Edit Note'}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={(e) => {
+              e.preventDefault();
+              handleAddNote(savedVideos[0].videoId, noteContent);
+              handleCloseModal(); // Close the modal after adding/editing the note
+            }}>
+              <Form.Group controlId={`formNoteContent_${savedVideos[0].videoId}`}>
+                <Form.Label>Note</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  placeholder="Enter notes here"
+                  name="content"
+                  value={noteContent}
+                  onChange={(e) => setNoteContent(e.target.value)}
+                />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Save Note
+              </Button>
+            </Form>
+          </Modal.Body>
+        </Modal>
       </Container>
     </>
   );
 };
 
-
-      {/* <div className="text-light bg-dark p-5">
-        <Container>
-          <h1>Viewing saved videos!</h1>
-        </Container>
-      </div>
-      <Container>
-        <h2 className='pt-5'>
-          {savedVideos.length
-            ? `Viewing ${savedVideos.length} saved ${savedVideos.length === 1 ? 'video' : 'videos'}:`
-            : 'You have no saved videos!'}
-        </h2>
-        <Row>
-          {savedVideos.map((video) => {
-            return (
-              <Col md="4" key={video.videoId}>
-                <Card border='dark'>
-                  {video.image ? <Card.Img src={video.image} alt={`The cover for ${video.title}`} variant='top' /> : null}
-                  <Card.Body>
-                    <Card.Title>{video.title}</Card.Title>
-                    <p className='small'>Channels: {video.channels}</p>
-                    <Card.Text>{video.description}</Card.Text>
-                    <Button className='btn-block btn-danger' onClick={() => handleDeleteVideo(video.videoId)}>
-                      Delete this Video!
-                    </Button>
-                    <Form onSubmit={(e) => {
-                      e.preventDefault();
-                      const content = e.target.content.value;
-                      handleAddNote(video.videoId, content);
-                    }}>
-                      <Form.Group controlId={`formNoteContent_${video.videoId}`}>
-                        <Form.Label>Notes</Form.Label>
-                        <Form.Control as="textarea" placeholder="Enter notes here" name="content" />
-                      </Form.Group>
-                      <Button variant="primary" type="submit">
-                        Add Note
-                      </Button>
-                    </Form>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
-      </Container>
-    </>
-  );
-}; */}
 export default SavedVideos;

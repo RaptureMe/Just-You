@@ -11,6 +11,7 @@ const typeDefs = `
     email: String
     password: String
     savedVideos: [Video]
+    notes: [Note]
   }
 
   type Auth {
@@ -26,6 +27,7 @@ const typeDefs = `
     link: String
     thumbnailURL: String
     channelTitle: String
+    note: Note
   }
 
   input VideoInput {
@@ -45,7 +47,7 @@ const typeDefs = `
     video: Video!
   }
   
-  input CreateNoteInput {
+  input NoteInput {
     content: String!
     videoId: ID!
   }
@@ -55,7 +57,6 @@ const typeDefs = `
     getChannelData(channelName: String!): ChannelData
     searchVideo(queriedTitle: String!): [Video]
     renderVideo(videoID: String!): Video
-    getNote(content: String!, videoId: String!): Note
   }
 
   type Mutation {
@@ -63,7 +64,7 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     saveVideo(video: VideoInput): User
     removeVideo(videoId: String!): User
-    createNote(input: CreateNoteInput!): Note 
+    createNote(NoteInput: NoteInput): Note 
   }
 `;
 

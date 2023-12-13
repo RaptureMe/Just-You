@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 
 // import schema from Book.js
 const videoSchema = require('./Video');
+const Note = require('./Note')
 
 const userSchema = new Schema(
   {
@@ -23,6 +24,10 @@ const userSchema = new Schema(
     },
     // set savedBooks to be an array of data that adheres to the bookSchema
     savedVideos: [videoSchema],
+    notes:[{
+      type: Schema.Types.ObjectId,
+      ref: 'Note'
+    }]
   },
   // set this to use virtual below
   {

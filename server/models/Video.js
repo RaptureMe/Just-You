@@ -34,6 +34,10 @@ const videoSchema = new Schema({
   },
   viewCount: {
     type: String
+  },
+  note: {
+    type: Schema.Types.ObjectId,
+    ref: 'Note',
   }
 });
 

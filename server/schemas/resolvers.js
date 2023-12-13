@@ -5,7 +5,9 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id });
+        // const userData = 
+
+        return await User.findOne({ _id: context.user._id }).populate('notes');
       }
       throw AuthenticationError;
     },
@@ -146,31 +148,36 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    createNote: async (parent, { input }, context) => {
+    createNote: async (parent, { NoteInput }, context) => {
       // Ensure the user is authenticated
       console.log('inside createNote\n')
-      console.log(input)
+      console.log(NoteInput)
       console.log(context.user)
       if (!context.user) {
         throw new AuthenticationError('You must be logged in to create a note.');
       }
-      console.log(input);
-      const { content, videoId } = input;
+      console.log(NoteInput);
+      const { content, videoId } = NoteInput;
 
       // Create a new note
-      const newNote = new Note({
+      const note = await Note.create({
         content,
+        videoId,
         user: context.user._id,
-        videoId: videoId,
       });
+
       console.log('right before newNote')
-      console.log(newNote)
+      console.log(note)
       // DO I NEED TO ADD THE NOTESCHEMA TO MONGOOSE IN THE CONFIG?
       // ********************************************************
       // ******************************************************
-      await newNote.save();
-
-      return newNote;
+      // await newNote.save();
+      await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { notes: note._id  } },
+        { new: true }
+      );
+      return note;
     },
   },
 };
