@@ -164,10 +164,10 @@ const SearchVideos = () => {
             : ''}
         </h4>
         {searchedVideos.map((video, index) => (
-          <Row key={index} className="mb-4 align-items-start pointerEffect" data-video-id = {video.videoId} onClick = {() => renderVideoPage(video.videoId)}>
+          <Row key={index} className="mb-4 align-items-start pointerEffect" >
             <Col xs="12" md="4">
               <a>
-                <img src={video.thumbnailURL} alt="video thumbnails" className="img-fluid" />
+                <img src={video.thumbnailURL} alt="video thumbnails" className="img-fluid" data-video-id = {video.videoId} onClick = {() => renderVideoPage(video.videoId)}/>
               </a>
             </Col>
             <Col xs="12" md="8" className="d-flex flex-column justify-content-between">

@@ -35,12 +35,6 @@ const SavedVideos = () => {
     ]
   });
 
-  // const [showNote] = useMutation(GET_NOTE, {
-  //   refetchQueries: [
-  //     QUERY_ME,
-  //     'Me'
-  //   ]
-  // });
 
   const {loading, data} = useQuery (QUERY_ME);
   // console.log(data);
@@ -100,7 +94,6 @@ const SavedVideos = () => {
     console.log(video)
     setSelectedVideo(video);
     setNoteContent(video.note || '');
-    setShowModal(true);
   };
 
 
