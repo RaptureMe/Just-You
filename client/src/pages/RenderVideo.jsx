@@ -16,9 +16,9 @@ const RenderVideo = () => {
   const { videoId } = useParams();
   const [videoData, setVideoData] = useState(null);
   const [channelData, setChannelData] = useState(null);
-  const [recommendedData, setRecommendedData] = useState([]);
+  //const [recommendedData, setRecommendedData] = useState([]);
+  const recommendedData = false;
   const [commentData, setCommentData] = useState([]);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -192,10 +192,8 @@ const RenderVideo = () => {
           ))}
         </div>
         ) : (
-        <div id = "commentSectionInfoContainer">
-            <div id = "commentCount">No Comments Available</div>
-            <div className = "linebreak"></div>
-            <input id = "addCommentInput" placeholder = "Be the first to add a comment..."></input>
+        <div id = "noCommentsContainer">
+            <div id = "noComments">No Comments Available</div>
         </div>
         )}
         </div>
@@ -203,21 +201,24 @@ const RenderVideo = () => {
       <div id = "recommendedSectionContainer">
         {(recommendedData) ? (
           recommendedData.map((video, index) => (
-            <div key={index} id = "recommendedVideoContainer" data-video-id = {video.videoId} onClick = {() => renderNextVideoPage(video.videoId)}>
-              <div>
-                <img id = "recommendedThumbnail" src = {video.thumbnail}></img>
-                <div id={`${video.videoLength.length < 6 ? 'videoLengthBackground' : 'videoLengthBackgroundWider'}`}>
-                  <div id="videoLength">{video.videoLength}</div>
+            <div>
+              <div key={index} id = "recommendedVideoContainer" data-video-id = {video.videoId} onClick = {() => renderNextVideoPage(video.videoId)}>
+                <div>
+                  <img id = "recommendedThumbnail" src = {video.thumbnail}></img>
+                  <div id={`${video.videoLength.length < 6 ? 'videoLengthBackground' : 'videoLengthBackgroundWider'}`}>
+                    <div id="videoLength">{video.videoLength}</div>
+                  </div>
+                </div>
+                <div id = "recommendedDetails">
+                  <div className="linebreak"></div>
+                  <div id = "recommendedTitle" className = "truncate">{video.title}</div>
+                  <div className="linebreak"></div>
+                  <div id = "recommendedChannel">{video.author}</div>
+                  <div className="linebreak"></div>
+                  <div id = "recommendedViewCount">{Number(video.viewcount).toLocaleString()} views</div>
                 </div>
               </div>
-              <div id = "recommendedDetails">
-                <div className="linebreak"></div>
-                <div id = "recommendedTitle" className = "truncate">{video.title}</div>
-                <div className="linebreak"></div>
-                <div id = "recommendedChannel">{video.author}</div>
-                <div className="linebreak"></div>
-                <div id = "recommendedViewCount">{Number(video.viewcount).toLocaleString()} views</div>
-              </div>
+              <div className="linebreak"></div>
             </div>
           ))
         ) : (

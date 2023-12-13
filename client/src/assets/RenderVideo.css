@@ -61,7 +61,6 @@
 
 #recommendedSectionContainer {
     width: 630px;
-    height: 100vw;
     margin-right: 20px;
 }
 
@@ -171,6 +170,14 @@
     font-weight: bold;
 }
 
+#noCommentsContainer {
+    width: 750px;
+    text-align: center;
+    margin-top: 70px;
+    font-size: 30px;
+}
+
+
 #addCommentInput {
     width: 90%;
     border: none;
@@ -237,23 +244,639 @@
 }
 
 @media screen and (max-width: 1100px) {
+    #noRecommendedVideos {
+        font-weight: bold;
+        font-size: 25px;
+        text-align: center;
+    }
+    #noCommentsContainer {
+        margin-top: 50px;
+        font-size:25px;
+        width: 580px;
+    }
+    #channelProfilePic {
+        width: 30px;
+        height: 30px;
+        margin-left: 0px;
+    }
     #renderedVideoDetails {
+        width: 550px;
     }
     .formattedVideo {
-        width: 400px !important;
-        height: 420px !important;
+        width: 390px !important;
+        height: 320px !important;
         border: 15px solid black;
         border-radius: 5%;
         margin-left: auto;
         margin-right: auto;
         box-shadow: 0px 0px 5px 2px #000;
         cursor: pointer;
+        position: relative;
+        right: 3px;
     }
     
     .backgroundImage {
         width: 550px !important;
         z-index: -1;
         position: relative;
-        bottom: 465px;
+        bottom: 340px;
+    }
+    #videoAndBackgroundContainer {
+        margin-bottom: -320px;
+        margin-top: 50px;
+    }
+    .videoDetails {
+        font-size: 20px;
+    }
+    #recommendedThumbnail {
+        width: 145px;
+        height: 81px;
+        margin-right: 5px;
+    }
+    #videoLength {
+        font-size: 12px;
+    }
+    #videoLengthBackground {
+        position: relative;
+        bottom: 24px;
+        width: 35px;
+        left: 105px;
+    }
+    #videoLengthBackgroundWider {
+        position: relative;
+        bottom: 25px;
+        width: 53px;
+        left: 85px;
+        z-index: 2;
+    }
+    #recommendedTitle {
+        font-weight: bold;
+        font-size: 11px;
+        height: 32px;
+        margin-top: -13px;
+        margin-left: 2px;
+    }
+    #recommendedChannel, #recommendedViewCount {
+        font-size: 9px;
+        margin-top: -22px;
+        margin-left: 2px;
+    }
+    #recommendedViewCount {
+        margin-top: -30px;
+    }
+    #recommendedVideoContainer {
+        margin-right: -15px;
+    }
+    #commentCount {
+        font-size: 18px;
+        margin-bottom: -15px;
+        margin-left: -10px;
+        font-weight: bold;
+    }
+    #commentProfilePic {
+        border-radius: 50%;
+        width: 37px;
+        height: 37px;
+        margin-right: 10px;
+        margin-left: 5px;
+    }
+    #commenterName, #commentDate {
+        font-size: 12px;
+    }
+    #commentText {
+        font-size: 13px;
+    }
+    #likesContainer {
+        margin-top: -10px;
+    }
+    #likesImage {
+        width: 15px;
+        height: 15px;
+    }
+    #likes {
+        font-size: 10px;
+    }
+    .truncate {
+        width: 120px;
+        max-width: 120px; /* Set the maximum height */
+      overflow-y: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* Adjust the number of lines to display */
+      -webkit-box-orient: vertical;
+    }
+    #recommendedSectionContainer {
+        margin-top: 30px;
+    }
+}
+
+@media screen and (max-width: 860px) {
+    #noRecommendedVideos {
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+    }
+    #noCommentsContainer {
+        margin-top: 40px;
+        font-size:20px;
+        width: 400px;
+    }
+    #channelProfilePic {
+        width: 25px;
+        height: 25px;
+    }
+    #renderedVideoDetails {
+        width: 430px;
+    }
+    .formattedVideo {
+        width: 285px !important;
+        height: 200px !important;
+        border: 8px solid black;
+        border-radius: 5%;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0px 0px 5px 2px #000;
+        cursor: pointer;
+        position: relative;
+        right: 3px;
+    }
+    
+    .backgroundImage {
+        width: 430px !important;
+        height: 240px !important;
+        z-index: -1;
+        position: relative;
+        bottom: 220px;
+    }
+
+    #videoAndBackground {
+        margin-bottom: 120px;
+    }
+
+    #videoAndBackgroundContainer {
+        margin-bottom: -332px;
+        margin-top: 50px;
+    }
+    .videoDetails {
+        font-size: 14px;
+    }
+    #renderedVideoDetails {
+        margin-bottom: 0px;
+    }
+    #recommendedThumbnail {
+        width: 120px;
+        height: 67px;
+        margin-right: 5px;
+    }
+    #videoLength {
+        font-size: 10px;
+    }
+    #videoLengthBackground {
+        position: relative;
+        bottom: 22px;
+        width: 33px;
+        left: 80px;
+    }
+    #videoLengthBackgroundWider {
+        position: relative;
+        bottom: 20px;
+        width: 45px;
+        left: 70px;
+        z-index: 2;
+    }
+    #recommendedChannel, #recommendedViewCount {
+        font-size: 8px;
+        margin-top: -27px;
+        margin-left: 2px;
+    }
+    #recommendedViewCount {
+        margin-top: -37px;
+    }
+    #recommendedVideoContainer {
+        margin-right: -15px;
+    }
+    #recommendedVideoContainer {
+        margin-bottom: -20px;
+    }
+    #recommendedTitle {
+        font-weight: bold;
+        font-size: 10px;
+        height: 32px;
+        margin-top: -15px;
+        margin-left: 2px;
+    }
+    .truncate {
+        width: 100px;
+        max-width: 100px; /* Set the maximum height */
+      overflow-y: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* Adjust the number of lines to display */
+      -webkit-box-orient: vertical;
+    }
+    #commentProfilePic {
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        margin-right: 10px;
+        margin-left: 5px;
+    }
+    #commenterName, #commentDate {
+        font-size: 10px;
+    }
+    #commentText {
+        font-size: 11px;
+    }
+    #likesContainer {
+        margin-top: -15px;
+        margin-left: -9px;
+    }
+    #likesImage {
+        width: 15px;
+        height: 15px;
+    }
+    #likes {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 670px) {
+    #noRecommendedVideos {
+        font-weight: bold;
+        font-size: 15px;
+        text-align: center;
+    }
+    #noCommentsContainer {
+        margin-top: 30px;
+        font-size: 15px;
+        width: 350px;
+    }
+    #channelProfilePic {
+        width: 20px;
+        height: 20px;
+    }
+    .formattedVideo {
+        width: 200px !important;
+        height: 170px !important;
+        border: 8px solid black;
+        border-radius: 5%;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0px 0px 5px 2px #000;
+        cursor: pointer;
+        position: relative;
+        right: 3px;
+        margin-top: -3px;
+    }
+    
+    .backgroundImage {
+        width: 300px !important;
+        height: 200px !important;
+        z-index: -1;
+        position: relative;
+        bottom: 185px;
+    }
+    #videoAndBackground {
+        margin-bottom: 150px;
+    }
+    #renderedVideoDetails {
+        width: 300px;
+    }
+    .videoDetails {
+        font-size: 12px;
+    }
+
+    #recommendedThumbnail {
+        width: 120px;
+        height: 67px;
+        margin-right: 5px;
+    }
+    #videoLength {
+        font-size: 10px;
+    }
+    #videoLengthBackground {
+        position: relative;
+        width: 35px;
+    }
+    #videoLengthBackgroundWider {
+        position: relative;
+        bottom: 20px;
+        width: 45px;
+        left: 70px;
+        z-index: 2;
+    }
+    #recommendedChannel, #recommendedViewCount {
+        font-size: 8px;
+        margin-top: -27px;
+        margin-left: 2px;
+    }
+    #recommendedViewCount {
+        margin-top: -37px;
+    }
+    #recommendedVideoContainer {
+        margin-right: -15px;
+    }
+    #recommendedVideoContainer {
+        margin-bottom: -20px;
+    }
+    #recommendedTitle {
+        font-weight: bold;
+        font-size: 10px;
+        height: 32px;
+        margin-top: -15px;
+        margin-left: 2px;
+    }
+    .truncate {
+        width: 100px;
+        max-width: 100px; /* Set the maximum height */
+      overflow-y: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* Adjust the number of lines to display */
+      -webkit-box-orient: vertical;
+    }
+    #commentCount {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    #noCommentsContainer {
+        width: 310px;
+    }
+}
+
+@media screen and (max-width: 530px) {
+    .truncate {
+        width: 90px;
+        max-width: 90px; /* Set the maximum height */
+      overflow-y: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* Adjust the number of lines to display */
+      -webkit-box-orient: vertical;
+    }
+    #recommendedViewCount {
+        margin-top: -30px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    #noRecommendedVideos {
+        font-weight: bold;
+        font-size: 10px;
+        text-align: center;
+    }
+    #noCommentsContainer {
+        margin-top: 15px;
+        font-size: 12px;
+        width: 280px;
+    }
+    #channelProfilePic {
+        width: 12px;
+        height: 12px;
+        margin-left: 3px;
+    }
+    .formattedVideo {
+        width: 130px !important;
+        height: 100px !important;
+        border: 5px solid black;
+        border-radius: 5%;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0px 0px 5px 2px #000;
+        cursor: pointer;
+        position: relative;
+        right: 1px;
+    }
+    
+    .backgroundImage {
+        width: 200px !important;
+        height: 120px !important;
+        z-index: -1;
+        position: relative;
+        bottom: 110px;
+    }
+    #videoAndBackground {
+        margin-bottom: 220px;
+        margin-top: -5px;
+    }
+    #renderedVideoDetails {
+        width: 200px;
+    }
+    .videoDetails {
+        font-size: 8px;
+    }
+    #recommendedThumbnail {
+        width: 70px;
+        height: 39px;
+        margin-right: 5px;
+    }
+    #videoLength {
+        font-size: 7px;
+    }
+    #videoLengthBackground {
+        position: relative;
+        bottom: 15px;
+        width: 30px;
+        left: 35px;
+    }
+    #videoLengthBackgroundWider {
+        position: relative;
+        bottom: 13px;
+        width: 30px;
+        left: 37px;
+        z-index: 2;
+    }
+    #recommendedChannel, #recommendedViewCount {
+        font-size: 5px;
+        margin-top: -33px;
+        margin-left: 2px;
+    }
+    #recommendedViewCount {
+        margin-top: -55px;
+    }
+    #recommendedVideoContainer {
+        margin-right: -15px;
+    }
+    #recommendedVideoContainer {
+        margin-bottom: -20px;
+    }
+    #recommendedTitle {
+        font-weight: bold;
+        font-size: 6px;
+        height: 20px;
+        margin-top: -15px;
+        margin-left: 2px;
+    }
+    .truncate {
+        width: 50px;
+        max-width: 50px; /* Set the maximum height */
+      overflow-y: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* Adjust the number of lines to display */
+      -webkit-box-orient: vertical;
+    }
+    #commentCount {
+        font-size: 12px;
+        margin-bottom: -10px;
+    }
+    #recommendedSectionContainer {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    #commentProfilePic {
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        margin-left: 5px;
+    }
+    #commenterName, #commentDate {
+        font-size: 8px;
+    }
+    #commentText {
+        font-size: 9px;
+    }
+    #likesContainer {
+        margin-top: -10px;
+    }
+    #likesImage {
+        width: 10px;
+        height: 10px;
+    }
+    #likes {
+        font-size: 7px;
+    }
+
+    #recommendedVideoContainer {
+        margin-bottom: -50px;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    #noRecommendedVideos {
+        position: relative;
+        left: -20px;
+    }
+    #noCommentsContainer {
+        margin-top: 30px;
+        font-size: 8px;
+        width: 265px;
+    }
+    #commentDate {
+        font-size: 7px;
+    }
+    .formattedVideo {
+        width: 125px !important;
+        height: 105px !important;
+        border: 5px solid black;
+        border-radius: 5%;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0px 0px 5px 2px #000;
+        cursor: pointer;
+        position: relative;
+        right: 0px;
+        top: 1px;
+    }
+    
+    .backgroundImage {
+        width: 180px !important;
+        height: 120px !important;
+        z-index: -1;
+        position: relative;
+        bottom: 110px;
+    }
+    #renderedVideoDetails {
+        width: 180px;
+        position: relative;
+        right: 17px;
+    }
+    .videoDetails {
+        font-size: 7px;
+    }
+    #recommendedSectionContainer {
+        margin-left: -35px;
+    }
+    #recommendedThumbnail {
+        width: 60px;
+        height: 33px;
+        margin-right: 5px;
+    }
+    #videoAndBackgroundContainer {
+        position: relative;
+        right: 17px;
+    }
+    #videoContainer {
+        margin-bottom: -10px;
+        margin-top: -7px;
+    }
+    #videoLengthBackground {
+        position: relative;
+        bottom: 12px;
+        width: 19px;
+        left: 38px;
+    }
+    #videoLengthBackgroundWider {
+        position: relative;
+        bottom: 11px;
+        width: 26px;
+        left: 30px;
+        z-index: 2;
+    }
+    #videoLength {
+        font-size: 6px;
+    }
+    #recommendedDetails {
+        margin-top: -3px;
+    }
+    #renderVideoPage {
+        margin-top: -7px;
+    }
+    #commenterName, #commentDate {
+        font-size: 6px;
+    }
+    #commentText {
+        font-size: 7px;
+    }
+    #commentProfilePic {
+        width: 15px;
+        height: 15px;
+    }
+    #likesContainer {
+        margin-top: -15px;
+    }
+    #likesImage {
+        width: 8px;
+        height: 8px;
+    }
+    #likes {
+        font-size: 6px;
+        margin-left: 0px;
+        margin-top: 1px;
+    }
+    #likesContainer {
+        position: relative;
+        top: 2px;
+    }
+    #recommendedSectionContainer {
+        margin-right: -20px;
+    }
+
+    #commentCount {
+        font-size: 12px;
+        margin-bottom: -30px;
+    }
+}
+
+@media screen and (max-width: 325px) {
+    #noRecommendedVideos {
+        position: relative;
+        left: -12px;
+    }
+    #noCommentsContainer {
+        margin-top: 30px;
+        font-size: 8px;
+        width: 225px;
+        position: relative;
+        left: -20px;
     }
 }
