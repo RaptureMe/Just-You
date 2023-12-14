@@ -153,8 +153,8 @@ const SavedVideos = () => {
           <Modal.Body>
             <Form onSubmit={(e) => {
               e.preventDefault();
-              handleAddNote(savedVideos[0].videoId, noteContent);
-              handleCloseModal(); // Close the modal after adding/editing the note
+              handleAddNote(savedVideos[0].videoId, noteContent); // WE'RE GETTING ERRORS SAYING VIDEOID IS UNDEFINED AND I COUDLDN'T FIGURE IT OUT
+              handleCloseModal(); 
             }}>
               <Form.Group controlId={`formNoteContent_${savedVideos[0].videoId}`}>
                 <Form.Label>Note</Form.Label>
