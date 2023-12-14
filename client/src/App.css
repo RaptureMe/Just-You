@@ -235,6 +235,10 @@ video {
   margin-right: 10px;
 }
 
+.renderedNotes {
+  margin-top: 20px;
+}
+
 /* Footer */
 .footerArea {
   background-color: rgb(245, 244, 244);

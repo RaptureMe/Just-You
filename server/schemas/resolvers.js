@@ -13,7 +13,7 @@ const resolvers = {
     },
     getChannelData: async (parent, { channelName }, context) => {
       const url = 'https://youtube-v2.p.rapidapi.com/channel/id?channel_name=' + channelName;
-       
+
       const options = {
         method: 'GET',
         headers: {
@@ -27,7 +27,7 @@ const resolvers = {
         const result = await response.json();
         const channelStatistics = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${result.channel_id}&key=AIzaSyCLjVLclOGVy4uIMGD5EEAK1r0LFKGjGJw`);
         const searchedStatistic = await channelStatistics.json();
-        
+
 
         const options2 = {
           method: 'GET',
@@ -105,7 +105,7 @@ const resolvers = {
             description: data.description,
             channelTitle: data.channelTitle,
             thumbnailURL: data.thumbnail[0].url
-          }
+          };
         }
         catch (error) {
           console.error(error);
@@ -113,6 +113,8 @@ const resolvers = {
       }
     },
   },
+
+
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
@@ -161,7 +163,7 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    createNote: async (parent, {videoId, content} , context) => {
+    createNote: async (parent, { videoId, content }, context) => {
       // Ensure the user is authenticated
       console.log('inside createNote\n')
       // console.log(NoteInput)
@@ -187,7 +189,7 @@ const resolvers = {
       // await newNote.save();
       await User.findOneAndUpdate(
         { _id: context.user._id },
-        { $addToSet: { notes: note._id  } },
+        { $addToSet: { notes: note._id } },
         { new: true }
       );
       return note;
