@@ -67,7 +67,8 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     saveVideo(video: VideoInput): User
     removeVideo(videoId: String!): User
-    createNote(videoId: String!, content: String!): Note 
+    createNote(videoId: String!, content: String!): User
+    note(videoId: String!): Note
   }
 `;
 

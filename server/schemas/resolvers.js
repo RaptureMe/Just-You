@@ -187,12 +187,21 @@ const resolvers = {
       // ********************************************************
       // ******************************************************
       // await newNote.save();
-      await User.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { _id: context.user._id },
         { $addToSet: { notes: note._id } },
         { new: true }
       );
-      return note;
+      return user;
+    },
+    note: async (parent, args, context) => {
+      if (context.user) {
+        // const userData = 
+        const note = await Note.findOne({ user: context.user._id, videoId: args.videoId });
+        console.log(note);
+        return note;
+      }
+      throw AuthenticationError;
     },
   },
 };
