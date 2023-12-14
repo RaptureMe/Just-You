@@ -22,7 +22,7 @@ const SavedVideos = () => {
   const [noteContent, setNoteContent] = useState('');
   const [selectedVideo, setSelectedVideo] = useState(null);
   const { loading, data, refetch } = useQuery(QUERY_ME);
-
+  const [selectedVideoIndex, setSelectedVideoIndex] = useState(null);
 
   const [RemoveVideo] = useMutation(REMOVE_VIDEO, {
     refetchQueries: [
@@ -64,7 +64,10 @@ const SavedVideos = () => {
   };
 
   //  opening and closing the modal
-  const handleShowModal = () => {
+  const handleShowModal = (video, index) => {
+    setSelectedVideo(video);
+    setSelectedVideoIndex(index);
+    setNoteContent(video.note || '');
     setShowModal(true);
   };
 
@@ -74,13 +77,13 @@ const SavedVideos = () => {
 
 
   // CHECK THIS TO SEE IF CORRECT
-  const handleAddNote = async (videoId, content) => {
+  const handleAddNote = async (content) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-    if (!token) {
+    if (!token || selectedVideoIndex === null) {
       return false;
     }
-
+    const videoId = savedVideos[selectedVideoIndex].videoId;
     try {
       console.log(content)
       // const NoteInput = {"videoId": videoId, "content": content}
@@ -131,21 +134,18 @@ const SavedVideos = () => {
               </Button>
               <Button
                 className='addButton btn-block btn-primary'
-                onClick={() => {
-                  setSelectedVideo(video);
-                  handleShowModal();
-                  setNoteContent(video.note || ''); // Set the initial content of the note
-                }}
+                onClick={() => handleShowModal(video, index)}
               >
                 Add Note
               </Button>
 
               <div>
     <h6 className='renderedNotes'>Notes:</h6>
-    {notes.map((note, index) => (
-       <li className='savednotes' key={index}>
-       <em>{note.content}</em>
-     </li>
+    {notes.filter((note) => note.videoId === video.videoId)
+                  .map((note, noteIndex) => (
+                    <li className='savednotes' key={noteIndex}>
+                      <em>{note.content}</em>
+                    </li>
     ))}
   </div>
             </Col>
@@ -160,7 +160,7 @@ const SavedVideos = () => {
           <Modal.Body>
             <Form onSubmit={(e) => {
               e.preventDefault();
-              handleAddNote(savedVideos[0].videoId, noteContent); // WE'RE GETTING ERRORS SAYING VIDEOID IS UNDEFINED AND I COUDLDN'T FIGURE IT OUT
+              handleAddNote( noteContent); // WE'RE GETTING ERRORS SAYING VIDEOID IS UNDEFINED AND I COUDLDN'T FIGURE IT OUT
               handleCloseModal();
             }}>
               <Form.Group controlId={savedVideos || `formNoteContent_${savedVideos[0].videoId}`}>
