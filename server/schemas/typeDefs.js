@@ -69,6 +69,7 @@ const typeDefs = gql`
     removeVideo(videoId: String!): User
     createNote(videoId: String!, content: String!): User
     note(videoId: String!): Note
+    deleteNote(noteId: ID!): User
     
   }
 `;

@@ -8,7 +8,7 @@ import {
 } from 'react-bootstrap';
 import { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { REMOVE_VIDEO, CREATE_NOTE, GET_NOTE } from "../utils/mutations";
+import { REMOVE_VIDEO, CREATE_NOTE, DELETE_NOTE } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
 import Auth from '../utils/auth';
 import { removeVideoId } from '../utils/localStorage';
@@ -37,6 +37,12 @@ const SavedVideos = () => {
     ]
   });
  
+  const [DeleteNote] = useMutation(DELETE_NOTE, {
+    refetchQueries: [
+      QUERY_ME,
+      'Me'
+    ]
+  });
   
 
 
@@ -97,6 +103,21 @@ const SavedVideos = () => {
     }
   };
 
+  const handleDeleteNote = async (noteId) => {
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      await DeleteNote({ variables: { noteId } });
+      await refetch();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
 
 
 
@@ -141,12 +162,21 @@ const SavedVideos = () => {
 
               <div>
     <h6 className='renderedNotes'>Notes:</h6>
+    <ul>
     {notes.filter((note) => note.videoId === video.videoId)
                   .map((note, noteIndex) => (
                     <li className='savednotes' key={noteIndex}>
                       <em>{note.content}</em>
+                      <Button 
+                      variant="danger"
+                      size="xsm"
+                      className="deleteNote ml-1"
+                      style={{ padding: '0.1rem 0.4rem', fontSize: '0.5rem' }}
+                      onClick={() => handleDeleteNote(note.id)}
+                      > Delete </Button>
                     </li>
     ))}
+    </ul>
   </div>
             </Col>
           </Row>

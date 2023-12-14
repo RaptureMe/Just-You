@@ -241,7 +241,14 @@ video {
 .savednotes {
   font-size: small;
 }
+.deleteNote {
+  background-color: rgb(233, 14, 14);
+  border: none;
+  color: white;
+  font-size: 8px;
+margin-left: 10px;
 
+}
 /* Footer */
 .footerArea {
   background-color: rgb(245, 244, 244);
