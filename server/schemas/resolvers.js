@@ -204,6 +204,32 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
+    deleteNote: async (parent, { noteId }, context) => {
+      if (context.user) {
+        try {
+          // Find the note by ID and remove it
+          const note = await Note.findByIdAndRemove(noteId);
+
+          if (!note) {
+            throw new Error('Note not found');
+          }
+
+          // Remove the note ID from the user's notes array
+          await User.findByIdAndUpdate(
+            context.user._id,
+            { $pull: { notes: note._id } },
+            { new: true }
+          );
+
+          return await User.findOne({ _id: context.user._id }).populate('notes');
+        } catch (error) {
+          console.error(error);
+          throw new Error('Failed to delete note');
+        }
+      }
+
+      throw new AuthenticationError('You must be logged in to delete a note.');
+    },
   },
 };
 

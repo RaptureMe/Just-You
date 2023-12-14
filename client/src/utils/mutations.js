@@ -56,3 +56,16 @@ mutation Note($videoId: String!) {
     videoId
   }
 }`
+
+export const DELETE_NOTE = gql`
+  mutation DeleteNote($noteId: ID!) {
+    deleteNote(noteId: $noteId) {
+      username
+      notes {
+        id
+        content
+        videoId
+      }
+    }
+  }
+`;
