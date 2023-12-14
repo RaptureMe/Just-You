@@ -39,12 +39,20 @@ mutation RemoveVideo($videoId: String!) {
 }
   `
 export const CREATE_NOTE = gql`
-  mutation CreateNote($videoId: String!, $content: String!) {
-    createNote(videoId: $videoId, content: $content) {
-      content
-      videoId
-      id
-      
-    }
+mutation CreateNote($videoId: String!, $content: String!) {
+  createNote(videoId: $videoId, content: $content) {
+    username
   }
+}
 `
+
+export const GET_NOTE = gql`
+mutation Note($videoId: String!) {
+  note(videoId: $videoId) {
+    user {
+      _id
+    }
+    content
+    videoId
+  }
+}`

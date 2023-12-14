@@ -16,6 +16,7 @@ query Query {
       channelTitle
     }
     notes {
+      videoId
       id
       content
       

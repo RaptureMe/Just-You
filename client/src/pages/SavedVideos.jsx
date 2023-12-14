@@ -8,8 +8,8 @@ import {
 } from 'react-bootstrap';
 import { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import {REMOVE_VIDEO, CREATE_NOTE} from "../utils/mutations";
-import {QUERY_ME} from "../utils/queries";
+import { REMOVE_VIDEO, CREATE_NOTE, GET_NOTE } from "../utils/mutations";
+import { QUERY_ME } from "../utils/queries";
 import Auth from '../utils/auth';
 import { removeVideoId } from '../utils/localStorage';
 
@@ -17,12 +17,12 @@ import { removeVideoId } from '../utils/localStorage';
 
 
 const SavedVideos = () => {
-    // CHECK THIS SECTION 
-    const [showModal, setShowModal] = useState(false);
-    const [noteContent, setNoteContent] = useState('');
-    const [selectedVideo, setSelectedVideo] = useState(null);
+  // CHECK THIS SECTION 
+  const [showModal, setShowModal] = useState(false);
+  const [noteContent, setNoteContent] = useState('');
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
-  const [RemoveVideo] = useMutation (REMOVE_VIDEO, {
+  const [RemoveVideo] = useMutation(REMOVE_VIDEO, {
     refetchQueries: [
       QUERY_ME,
       'Me'
@@ -34,15 +34,30 @@ const SavedVideos = () => {
       'Me'
     ]
   });
+  const [Note] = useMutation(GET_NOTE, {
+    refetchQueries: [
+      QUERY_ME,
+      'Me'
+    ]
+  });
 
 
-  const {loading, data} = useQuery (QUERY_ME);
+  const { loading, data } = useQuery(QUERY_ME);
   // console.log(data);
   const savedVideos = data?.me.savedVideos || [];
   const notes = data?.me.notes || [];
   console.log(notes); // Added console.log to see the 'notes' variable
 
-
+  const handleNote = async (videoId) => {
+    try {
+      const { data } = await Note({ variables: { videoId } })
+      const result = data.note ? data.note.content : "No Notes Available";
+      console.log(result);
+      return <p>result</p>;
+    } catch (err) {
+      console.log(err)
+    }
+  };
   // accepting the video's mongo _id value as param and deletes the video from the database
   const handleDeleteVideo = async (videoId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -52,7 +67,7 @@ const SavedVideos = () => {
     }
 
     try {
-      await RemoveVideo({variables: {videoId}});
+      await RemoveVideo({ variables: { videoId } });
       // upon success, remove video's id from localStorage
       removeVideoId(videoId);
     } catch (err) {
@@ -60,14 +75,14 @@ const SavedVideos = () => {
     }
   };
 
-     //  opening and closing the modal
-     const handleShowModal = () => {
-      setShowModal(true);
-    };
-  
-    const handleCloseModal = () => {
-      setShowModal(false);
-    };
+  //  opening and closing the modal
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
 
   // CHECK THIS TO SEE IF CORRECT
@@ -83,15 +98,15 @@ const SavedVideos = () => {
       // const NoteInput = {"videoId": videoId, "content": content}
       console.log('add note')
       // console.log(NoteInput)
-      await CreateNote({ variables:{videoId,content}} );
-      await refetch();
-      handleCloseModal(); 
+      await CreateNote({ variables: { videoId, content } });
+      // await refetch();
+      handleCloseModal();
     } catch (err) {
       console.error(err);
     }
   };
 
- 
+
 
 
   // if data isn't here yet, say so
@@ -100,8 +115,8 @@ const SavedVideos = () => {
   }
 
   return (
-  <>
-<div className="text-light bg-dark p-5 savedNav">
+    <>
+      <div className="text-light bg-dark p-5 savedNav">
         <Container>
           <h1>Saved Videos</h1>
         </Container>
@@ -112,8 +127,8 @@ const SavedVideos = () => {
             ? `Viewing ${savedVideos.length} saved ${savedVideos.length === 1 ? 'video' : 'videos'}:`
             : 'You have no saved videos!'}
         </h3>
-        {savedVideos.map((video) => (
-          <Row key={video.videoId} className="my-3">
+        {savedVideos.map((video, index) => (
+          <Row key={index} className="my-3">
             <Col xs="12" md="6">
               {video.thumbnailURL && (
                 <img src={video.thumbnailURL} alt="video thumbnail" className="img-fluid" />
@@ -121,8 +136,8 @@ const SavedVideos = () => {
             </Col>
             <Col xs="12" md="6">
               <h5>{video.title}</h5>
-              
-              
+
+
               <Button className='deleteButton btn-block btn-danger' onClick={() => handleDeleteVideo(video.videoId)}>
                 Delete!
               </Button>
@@ -139,7 +154,7 @@ const SavedVideos = () => {
 
               <div>
                 <h6 className='renderedNotes'>Note:</h6>
-                <p>{noteContent || 'No notes available'}</p>
+                {/* {handleNote(video.videoId)} */}
               </div>
             </Col>
           </Row>
@@ -148,15 +163,15 @@ const SavedVideos = () => {
         {/* Modal for adding/editing notes */}
         <Modal show={showModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
-          <Modal.Title>{selectedVideo?.title || 'Add/Edit Note'}</Modal.Title>
+            <Modal.Title>{selectedVideo?.title || 'Add/Edit Note'}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form onSubmit={(e) => {
               e.preventDefault();
               handleAddNote(savedVideos[0].videoId, noteContent); // WE'RE GETTING ERRORS SAYING VIDEOID IS UNDEFINED AND I COUDLDN'T FIGURE IT OUT
-              handleCloseModal(); 
+              handleCloseModal();
             }}>
-              <Form.Group controlId={`formNoteContent_${savedVideos[0].videoId}`}>
+              <Form.Group controlId={savedVideos || `formNoteContent_${savedVideos[0].videoId}`}>
                 <Form.Label>Note</Form.Label>
                 <Form.Control
                   as="textarea"
