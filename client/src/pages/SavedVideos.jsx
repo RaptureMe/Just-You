@@ -17,10 +17,12 @@ import { removeVideoId } from '../utils/localStorage';
 
 
 const SavedVideos = () => {
-  // CHECK THIS SECTION 
+
   const [showModal, setShowModal] = useState(false);
   const [noteContent, setNoteContent] = useState('');
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const { loading, data, refetch } = useQuery(QUERY_ME);
+
 
   const [RemoveVideo] = useMutation(REMOVE_VIDEO, {
     refetchQueries: [
@@ -34,30 +36,16 @@ const SavedVideos = () => {
       'Me'
     ]
   });
-  const [Note] = useMutation(GET_NOTE, {
-    refetchQueries: [
-      QUERY_ME,
-      'Me'
-    ]
-  });
+ 
+  
 
 
-  const { loading, data } = useQuery(QUERY_ME);
   // console.log(data);
   const savedVideos = data?.me.savedVideos || [];
   const notes = data?.me.notes || [];
   console.log(notes); // Added console.log to see the 'notes' variable
 
-  const handleNote = async (videoId) => {
-    try {
-      const { data } = await Note({ variables: { videoId } })
-      const result = data.note ? data.note.content : "No Notes Available";
-      console.log(result);
-      return <p>result</p>;
-    } catch (err) {
-      console.log(err)
-    }
-  };
+ 
   // accepting the video's mongo _id value as param and deletes the video from the database
   const handleDeleteVideo = async (videoId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -99,7 +87,7 @@ const SavedVideos = () => {
       console.log('add note')
       // console.log(NoteInput)
       await CreateNote({ variables: { videoId, content } });
-      // await refetch();
+      await refetch();
       handleCloseModal();
     } catch (err) {
       console.error(err);
@@ -153,9 +141,13 @@ const SavedVideos = () => {
               </Button>
 
               <div>
-                <h6 className='renderedNotes'>Note:</h6>
-                {/* {handleNote(video.videoId)} */}
-              </div>
+    <h6 className='renderedNotes'>Notes:</h6>
+    {notes.map((note, index) => (
+       <li className='savednotes' key={index}>
+       <em>{note.content}</em>
+     </li>
+    ))}
+  </div>
             </Col>
           </Row>
         ))}

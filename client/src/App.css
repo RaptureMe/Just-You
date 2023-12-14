@@ -238,6 +238,9 @@ video {
 .renderedNotes {
   margin-top: 20px;
 }
+.savednotes {
+  font-size: small;
+}
 
 /* Footer */
 .footerArea {
