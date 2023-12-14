@@ -7,7 +7,8 @@ const resolvers = {
       if (context.user) {
         // const userData = 
 
-        return await User.findOne({ _id: context.user._id }).populate('notes');
+         const userWithNotes = await User.findOne({ _id: context.user._id }).populate('notes');
+        return userWithNotes;
       }
       throw AuthenticationError;
     },
@@ -142,7 +143,7 @@ const resolvers = {
       if (context.user) {
         const user = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { savedVideos: { ...video } } },
+          { $addToSet: { savedVideos: { ...video, notes: [] } } },
           { new: true }
         );
 
