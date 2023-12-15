@@ -67,5 +67,17 @@ export const DELETE_NOTE = gql`
         videoId
       }
     }
+  }`
+  
+  export const EDIT_NOTE = gql`
+  mutation EditNote($noteId: ID!, $content: String!) {
+    editNote(noteId: $noteId, content: $content) {
+      username
+      notes {
+        id
+        content
+        videoId
+      }
+    }
   }
 `;

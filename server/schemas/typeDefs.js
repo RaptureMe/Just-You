@@ -70,6 +70,7 @@ const typeDefs = gql`
     createNote(videoId: String!, content: String!): User
     note(videoId: String!): Note
     deleteNote(noteId: ID!): User
+    editNote(noteId: ID!, content: String!): User
     
   }
 `;

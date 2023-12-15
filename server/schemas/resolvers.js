@@ -230,6 +230,23 @@ const resolvers = {
 
       throw new AuthenticationError('You must be logged in to delete a note.');
     },
+    
+    editNote: async (parent, { noteId, content }, context) => {
+      // Check if the user is authenticated
+      if (!context.user) {
+        throw new AuthenticationError('You must be logged in to edit a note.');
+      }
+  
+      // Find the note and update its content
+      const updatedNote = await Note.findByIdAndUpdate(
+        noteId,
+        { content },
+        { new: true }
+      );
+  
+      // Return the updated user
+      return await User.findOne({ _id: context.user._id }).populate('notes');
+    },
   },
 };
 
