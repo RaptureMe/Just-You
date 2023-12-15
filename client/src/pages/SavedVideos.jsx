@@ -8,7 +8,7 @@ import {
 } from 'react-bootstrap';
 import { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { REMOVE_VIDEO, CREATE_NOTE, DELETE_NOTE } from "../utils/mutations";
+import { REMOVE_VIDEO, CREATE_NOTE, DELETE_NOTE, EDIT_NOTE } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
 import Auth from '../utils/auth';
 import { removeVideoId } from '../utils/localStorage';
@@ -23,6 +23,8 @@ const SavedVideos = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const { loading, data, refetch } = useQuery(QUERY_ME);
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(null);
+  const [editingNote, setEditingNote] = useState(null);
+  const [editedNoteContent, setEditedNoteContent] = useState('');
 
   const [RemoveVideo] = useMutation(REMOVE_VIDEO, {
     refetchQueries: [
@@ -36,14 +38,21 @@ const SavedVideos = () => {
       'Me'
     ]
   });
- 
+
   const [DeleteNote] = useMutation(DELETE_NOTE, {
     refetchQueries: [
       QUERY_ME,
       'Me'
     ]
   });
-  
+
+  const [EditNote] = useMutation(EDIT_NOTE, {
+    refetchQueries: [
+      QUERY_ME,
+      'Me'
+    ]
+  });
+
 
 
   // console.log(data);
@@ -51,7 +60,7 @@ const SavedVideos = () => {
   const notes = data?.me.notes || [];
   console.log(notes); // Added console.log to see the 'notes' variable
 
- 
+
   // accepting the video's mongo _id value as param and deletes the video from the database
   const handleDeleteVideo = async (videoId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -82,7 +91,7 @@ const SavedVideos = () => {
   };
 
 
-  // CHECK THIS TO SEE IF CORRECT
+  // function to add a note to a video 
   const handleAddNote = async (content) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -103,6 +112,7 @@ const SavedVideos = () => {
     }
   };
 
+  // function to delete a note from a video 
   const handleDeleteNote = async (noteId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -112,6 +122,30 @@ const SavedVideos = () => {
 
     try {
       await DeleteNote({ variables: { noteId } });
+      await refetch();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // function to edit a note on the video 
+  const handleEditNote = async (noteId, newContent) => {
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+  
+    if (!token) {
+      return false;
+    }
+  
+    try {
+      await EditNote({ variables: { noteId, content: newContent } });
+  
+      const updatedNotes = notes.map((note) =>
+        note.id === noteId ? { ...note, content: newContent } : note
+      );
+  
+      setNoteContent(updatedNotes);
+      setEditingNote('');
+  
       await refetch();
     } catch (err) {
       console.error(err);
@@ -161,23 +195,58 @@ const SavedVideos = () => {
               </Button>
 
               <div>
-    <h6 className='renderedNotes'>Notes:</h6>
-    <ul>
-    {notes.filter((note) => note.videoId === video.videoId)
-                  .map((note, noteIndex) => (
-                    <li className='savednotes' key={noteIndex}>
-                      <em>{note.content}</em>
-                      <Button 
-                      variant="danger"
-                      size="xsm"
-                      className="deleteNote ml-1"
-                      style={{ padding: '0.1rem 0.4rem', fontSize: '0.5rem' }}
-                      onClick={() => handleDeleteNote(note.id)}
-                      > Delete </Button>
-                    </li>
-    ))}
-    </ul>
-  </div>
+                <h6 className='renderedNotes'>Notes:</h6>
+                <ul>
+                  {notes.filter((note) => note.videoId === video.videoId)
+                    .map((note, noteIndex) => (
+                      <li className='savednotes' key={noteIndex}>
+                        {editingNote === note.id ? (
+                          <>
+                            <input
+                              type="text"
+                              value={editedNoteContent}
+                              onChange={(e) => setEditedNoteContent(e.target.value)}
+                            />
+                            <Button
+                              variant="primary"
+                              size="xsm"
+                              className="ml-1"
+                              style={{ padding: '0.1rem 0.4rem', fontSize: '0.5rem' }}
+                              onClick={() => handleEditNote(note.id, editedNoteContent)}
+                            >
+                              Save
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            <em>{note.content}</em>
+                            <Button
+                              variant="primary"
+                              size="xsm"
+                              className="editNote ml-1"
+                              style={{ padding: '0.1rem 0.4rem', fontSize: '0.5rem' }}
+                              onClick={() => {
+                                setEditingNote(note.id);
+                                setEditedNoteContent(note.content);
+                              }}
+                            >
+                              Edit
+                            </Button>
+                            <Button
+                              variant="danger"
+                              size="xsm"
+                              className="deleteNote ml-1"
+                              style={{ padding: '0.1rem 0.4rem', fontSize: '0.5rem' }}
+                              onClick={() => handleDeleteNote(note.id)}
+                            >
+                              Delete
+                            </Button>
+                          </>
+                        )}
+                      </li>
+                    ))}
+                </ul>
+              </div>
             </Col>
           </Row>
         ))}
@@ -188,11 +257,21 @@ const SavedVideos = () => {
             <Modal.Title>{selectedVideo?.title || 'Add/Edit Note'}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form onSubmit={(e) => {
-              e.preventDefault();
-              handleAddNote( noteContent); // WE'RE GETTING ERRORS SAYING VIDEOID IS UNDEFINED AND I COUDLDN'T FIGURE IT OUT
-              handleCloseModal();
-            }}>
+          <Form onSubmit={(e) => {
+        e.preventDefault();
+        if (selectedVideoIndex !== null && selectedVideoIndex < savedVideos.length) {
+          // Check if we are editing an existing note
+          const existingNote = notes.find((note) => note.videoId === selectedVideo.videoId);
+          if (existingNote) {
+            // If the note exists, edit it
+            handleEditNote(existingNote.id, noteContent);
+          } else {
+            // If the note doesn't exist, add a new one
+            handleAddNote(noteContent);
+          }
+        }
+        handleCloseModal();
+      }}>
               <Form.Group controlId={savedVideos || `formNoteContent_${savedVideos[0].videoId}`}>
                 <Form.Label>Note</Form.Label>
                 <Form.Control

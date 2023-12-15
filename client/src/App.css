@@ -249,6 +249,10 @@ video {
 margin-left: 10px;
 
 }
+
+.editNote {
+  margin-left: 20px;
+}
 /* Footer */
 .footerArea {
   background-color: rgb(245, 244, 244);
