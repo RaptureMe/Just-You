@@ -12,7 +12,7 @@ import { REMOVE_VIDEO, CREATE_NOTE, DELETE_NOTE, EDIT_NOTE } from "../utils/muta
 import { QUERY_ME } from "../utils/queries";
 import Auth from '../utils/auth';
 import { removeVideoId } from '../utils/localStorage';
-
+import { Link } from 'react-router-dom';
 
 
 
@@ -82,7 +82,8 @@ const SavedVideos = () => {
   const handleShowModal = (video, index) => {
     setSelectedVideo(video);
     setSelectedVideoIndex(index);
-    setNoteContent(video.note || '');
+    setNoteContent('');
+    setEditingNote(null);
     setShowModal(true);
   };
 
@@ -95,17 +96,18 @@ const SavedVideos = () => {
   const handleAddNote = async (content) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-    if (!token || selectedVideoIndex === null) {
+    if (!token || !selectedVideo) {
       return false;
     }
-    const videoId = savedVideos[selectedVideoIndex].videoId;
+    const videoId = selectedVideo.videoId;
     try {
       console.log(content)
       // const NoteInput = {"videoId": videoId, "content": content}
       console.log('add note')
       // console.log(NoteInput)
-      await CreateNote({ variables: { videoId, content } });
+      await CreateNote({ variables: { videoId, content: noteContent } });
       await refetch();
+      setNoteContent('');
       handleCloseModal();
     } catch (err) {
       console.error(err);
@@ -152,7 +154,10 @@ const SavedVideos = () => {
     }
   };
 
-
+  const handleStartEditing = (noteId, content) => {
+    setEditingNote(noteId);
+    setEditedNoteContent(content);
+  };
 
 
   // if data isn't here yet, say so
@@ -176,9 +181,11 @@ const SavedVideos = () => {
         {savedVideos.map((video, index) => (
           <Row key={index} className="my-3">
             <Col xs="12" md="6">
+            <Link to={`/renderVideo/${video.videoId}`}>
               {video.thumbnailURL && (
                 <img src={video.thumbnailURL} alt="video thumbnail" className="img-fluid" />
               )}
+              </Link>
             </Col>
             <Col xs="12" md="6">
               <h5>{video.title}</h5>
@@ -219,17 +226,14 @@ const SavedVideos = () => {
                           </>
                         ) : (
                           <>
-                            <em>{note.content}</em>
-                            <Button
-                              variant="primary"
-                              size="xsm"
-                              className="editNote ml-1"
-                              style={{ padding: '0.1rem 0.4rem', fontSize: '0.5rem' }}
-                              onClick={() => {
-                                setEditingNote(note.id);
-                                setEditedNoteContent(note.content);
-                              }}
-                            >
+                          <em>{note.content}</em>
+                          <Button
+                            variant="primary"
+                            size="xsm"
+                            className="editNote ml-1"
+                            style={{ padding: '0.1rem 0.4rem', fontSize: '0.5rem' }}
+                            onClick={() => handleStartEditing(note.id, note.content)}
+                          >
                               Edit
                             </Button>
                             <Button
@@ -261,15 +265,15 @@ const SavedVideos = () => {
         e.preventDefault();
         if (selectedVideoIndex !== null && selectedVideoIndex < savedVideos.length) {
           // Check if we are editing an existing note
-          const existingNote = notes.find((note) => note.videoId === selectedVideo.videoId);
-          if (existingNote) {
-            // If the note exists, edit it
-            handleEditNote(existingNote.id, noteContent);
-          } else {
+          // const existingNote = notes.find((note) => note.videoId === selectedVideo.videoId);
+          // if (existingNote) {
+          //   // If the note exists, edit it
+          //   handleEditNote(existingNote.id, noteContent);
+          // } else {
             // If the note doesn't exist, add a new one
-            handleAddNote(noteContent);
+            handleAddNote();
           }
-        }
+        
         handleCloseModal();
       }}>
               <Form.Group controlId={savedVideos || `formNoteContent_${savedVideos[0].videoId}`}>
